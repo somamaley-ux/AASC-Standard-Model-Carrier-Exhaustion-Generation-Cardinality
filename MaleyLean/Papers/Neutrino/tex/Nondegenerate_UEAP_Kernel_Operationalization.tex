@@ -1,0 +1,420 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\newcommand{\AASC}{\mathrm{AASC}}
+\newcommand{\UEAP}{\mathrm{UEAP}}
+\newcommand{\MR}{\mathrm{MR}}
+\newcommand{\NNR}{\mathrm{NNR}}
+\newcommand{\GCI}{\mathrm{GCI}}
+\newcommand{\SigmaLeg}{\Sigma\text{-}\mathrm{Leg}}
+
+\title{Non-Degenerate UEAP Kernel Operationalization\\
+for the Standing Neutrino Splitting-Ratio Branch Audit}
+\author{Soma Maley}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We give the branch-audit proof that the standing neutrino splitting-ratio
+problem closes to a singleton once the target is treated as a non-degenerate
+same-scope regime. The central observation is that the UEAP claim-standing
+audit is not an additional empirical or discretionary filter. In a
+non-degenerate regime it is the admissibility kernel operationalized: every
+surviving branch must make a UEAP sigma-legitimate claim, while every
+non-current branch is forced by the kernel to fail one UEAP legitimacy
+coordinate. The current branch is point-identifying by unique admissible
+interior occupancy. Hence all non-current branches are eliminated and the
+hybrid joint restriction has the current standing ratio as its unique
+survivor. The proof is mapped to the accompanying Lean formalization in
+\texttt{MaleyLean/Papers/Neutrino/RatioBlocker.lean}.
+\end{abstract}
+
+\section{Purpose}
+
+This note records the paper-facing proof corresponding to the Lean object
+\[
+\texttt{AASCNondegenerateUEAPKernelOperationalization C M H N S}.
+\]
+The result is a bridge from the non-degenerate admissibility kernel to the
+UEAP branch audit for the standing neutrino splitting-ratio problem. In the
+Lean development, inhabiting this object is sufficient to derive
+\[
+\texttt{nondegenerateUEAPKernelOperationalizationGiveJointSingleton}
+\]
+and
+\[
+\texttt{nondegenerateUEAPKernelOperationalizationRulesOutSecondPoint}.
+\]
+
+The proof should be read as a closure audit. It does not compute a numerical
+mass or import observed splitting values. It establishes that, under the
+admitted AASC same-scope restrictions, every non-current route fails
+claim-standing, while the current route is uniquely point-identifying.
+
+\section{Lean4 Provenance and Theorem Map}
+
+The Lean4 formalization provenance status used in this note is:
+\[
+\text{Lean4 build status reported.}
+\]
+The local repository command
+\[
+\texttt{lake build MaleyLean.Papers.Neutrino}
+\]
+completed successfully on 2026-05-28. This is a reported local build status
+for the repository formalization. Independent build audit of a manuscript
+submission package remains a verification task, not a manuscript premise.
+
+The word ``current'' in ``current standing ratio'' means current within the
+admitted AASC standing ledger. It does not mean the current empirical best-fit
+ratio or an imported numerical experimental value.
+
+\begin{center}
+\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.34\linewidth}
+                >{\raggedright\arraybackslash}p{0.56\linewidth}}
+\toprule
+Manuscript claim or dependency & Lean object or theorem \\
+\midrule
+Standing ratio certificate \(C\) &
+\texttt{StandingRatioCertificate};
+\texttt{StandingRatioCertificateAdmitted};
+\texttt{standingRatioCertificateAdmitted}. \\
+\addlinespace
+MR3 spectral-source admission \(M\) &
+\texttt{MR3SpectralSourceAdmission};
+\texttt{MR3SpectralSourceAdmissionWitness};
+\texttt{MR3CorpusTheorems.admitsSource}. \\
+\addlinespace
+Hybrid modular/spectral/scoto restriction \(H\) &
+\texttt{AASCHybridCompressionNetwork};
+\texttt{AASCHybridSameScopeAdmissionWitness};
+\texttt{hybridSameScopeAdmissionWitnessClearsH}. \\
+\addlinespace
+No-eleventh-route census \(N\) &
+\texttt{AASCNoEleventhNeutrinoRoute};
+\texttt{AASCNoEleventhRouteCensusWitness};
+\texttt{noEleventhRouteCensusWitnessClearsN}. \\
+\addlinespace
+Corpus support ledger \(S\) &
+\texttt{AASCCorpusBranchSupportLedger};
+\texttt{corpusSupportLedgerAdmitted}. \\
+\addlinespace
+Non-degenerate kernel admission &
+\texttt{AASCNondegenerateKernelInteriorAdmission};
+\texttt{nondegenerateKernelAdmissionFromCurrentPointIdentification}. \\
+\addlinespace
+Branch impossibility audit &
+\texttt{AASCBranchImpossibilityAudit};
+\texttt{branchImpossibilityAuditAsConcreteBranchFailureTable}. \\
+\addlinespace
+Admissible ratio branch singleton locked &
+\texttt{HybridJointRestrictionSingleton};
+\texttt{branchAuditAndKernelAdmissionWitnessesGiveEndpointSingleton}. \\
+\addlinespace
+No second admissible branch &
+\texttt{HybridJointRestrictionHasSecondPoint};
+\texttt{branchAuditAndKernelAdmissionWitnessesRuleOutSecondPoint}. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Standing Neutrino Ratio Setting}
+
+Let \(C\) be the standing neutrino splitting-ratio certificate. It contains
+two non-collapsed response roles, the solar and atmospheric splitting roles,
+together with a common carrier, a fixed atmospheric denominator, a subordinate
+solar-to-atmospheric relation, and the reportable standing ratio. Let \(M\)
+be the MR3 spectral-source admission, let \(H\) be the hybrid
+modular/spectral/scoto compression network, let \(N\) be the no-eleventh-route
+census, and let \(S\) be the corpus support ledger.
+
+The hybrid joint restriction is the class of ratios \(r\) such that
+\[
+ r \in C.\mathrm{inMinimalInterval},\qquad
+ H_{\mathrm{mod}}(r),\qquad
+ H_{\mathrm{spectral}}(r),\qquad
+ H_{\mathrm{scoto}}(r).
+\]
+The no-eleventh-route census assigns every exposed route carrier a finite
+draft branch index. The current branch is
+\[
+\texttt{currentStandingRatio}.
+\]
+Here ``current'' is ledger-current: the branch selected by the admitted AASC
+standing certificate and its route census, not a numerical experimental
+best-fit value.
+The non-current branches are:
+\[
+\begin{array}{ll}
+\texttt{modularOnlyBranch}, &
+\texttt{scotoParameterFiberBranch},\\
+\texttt{spectralWithoutFiniteCollapseBranch}, &
+\texttt{sterileScopeExtensionBranch},\\
+\texttt{phaseTopologyBreakingBranch}, &
+\texttt{matterTransportBreakingBranch},\\
+\texttt{absoluteMassImportBranch}, &
+\texttt{diracMajoranaSelectorBranch},\\
+\texttt{identitySelectorBranch}. &
+\end{array}
+\]
+
+\section{UEAP as Kernel Operationalized}
+
+\begin{definition}[UEAP kernel operationalization]
+In a non-degenerate AASC regime, UEAP is the operational form of the
+admissibility kernel when expressed as a claim-standing audit. A branch that
+survives the hybrid joint restriction must satisfy UEAP sigma-legitimacy for
+its exposed branch class. A non-current branch fails exactly when the kernel
+forces failure of at least one UEAP legitimacy coordinate.
+\end{definition}
+
+This definition is important because it prevents UEAP from being treated as
+an extra optional screen. The non-degenerate kernel already determines which
+same-scope claims are admissible. UEAP merely records those kernel conditions
+as auditable coordinates: target fixation, carrier adequacy, fixed meaning,
+fixed scope, target-carrier alignment, exhaustion modulo skin, laundering
+exclusion, ancestry separation, boundary declaration, evidence-network
+closure, and report preservation.
+
+\section{Current Branch}
+
+\begin{lemma}[Current-class point identification]
+In the non-degenerate standing regime, any hybrid-joint ratio whose route
+carrier has current draft class is extensionally the current standing ratio.
+\end{lemma}
+
+\begin{proof}
+The non-degenerate kernel applies because the target is not a degenerate
+placeholder, empty boundary object, pure notation choice, or free parameter
+fiber. It is a standing same-target object over two non-collapsed response
+roles with fixed denominator, fixed carrier, and fixed role relation.
+
+By the kernel and unique-interior results, non-degenerate standing occupies
+the unique admissible interior. Thus two same-domain current-class occupants
+cannot remain distinct unless they introduce a new admissibility-bearing role,
+boundary, or carrier distinction. Those possibilities are excluded by the
+same-scope residual admission and quotient-skin discipline. Therefore the
+current-class occupant is the current standing ratio.
+
+In Lean this is the point-identification content of
+\[
+\texttt{AASCNondegenerateKernelInteriorAdmission}.
+\]
+\end{proof}
+
+\section{Non-Current Branch Audit}
+
+\begin{lemma}[Joint survivors must be UEAP-legitimate]
+If a branch survives the hybrid joint restriction, then its exposed draft
+class must satisfy UEAP sigma-legitimacy.
+\end{lemma}
+
+\begin{proof}
+A surviving branch is not merely compatible evidence or a suggestive model
+fragment. It purports to close the same standing target under the admitted
+hybrid restriction. Therefore it is a claim-standing route. Since UEAP is the
+kernel operationalized, any such route must satisfy the UEAP sigma-legitimacy
+conditions for its draft class.
+\end{proof}
+
+\begin{lemma}[Kernel-forced coordinate failures]
+Each non-current draft branch has a kernel-forced UEAP coordinate failure.
+\end{lemma}
+
+\begin{proof}
+The branch-by-branch assignments are shown in Table~\ref{tab:branch-audit}.
+Each row records one way in which the non-current branch fails to satisfy the
+claim-standing coordinates required by the non-degenerate admissibility
+kernel.
+\end{proof}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.24\linewidth}
+                >{\raggedright\arraybackslash}p{0.25\linewidth}
+                >{\raggedright\arraybackslash}p{0.39\linewidth}}
+\toprule
+Branch & UEAP coordinate failure & Corpus reason \\
+\midrule
+\texttt{modularOnlyBranch} &
+\texttt{alternativesNotExhaustedModuloSkin} &
+NNR4G/H magnitude-compression blocks promotion from modular motif, texture,
+or carrier polynomial to the target ratio unless all same-scope alternatives
+are exhausted modulo skin. \\
+\addlinespace
+\texttt{scotoParameterFiberBranch} &
+\texttt{launderingNotExcluded} &
+Residual-parameter and scoto/seesaw audits block hidden parameter repair. A
+live parameter fiber cannot be laundered into first-principles closure unless
+source-fixed, quotient-skin, or forced by the shared locus. \\
+\addlinespace
+\texttt{spectralWithoutFiniteCollapseBranch} &
+\texttt{evidenceNetworkNotClosed} &
+Fixed-domain exhaustion and quotient-fiber exactness require finite collapse,
+overlap, or quotient-fiber exhaustion before a spectral quotient can report
+exact selection. \\
+\addlinespace
+\texttt{sterileScopeExtensionBranch} &
+\texttt{scopeUnfixed} &
+Sterile/gauge-singlet or AdS/transport extensions change the comparison scope
+unless they project back through the admitted same-scope residual quotient. \\
+\addlinespace
+\texttt{phaseTopologyBreakingBranch} &
+\texttt{reportNotPreserving} &
+Oscillation phase topology gives coherent readback and compatibility, not an
+independent magnitude selector for the splitting-ratio target. \\
+\addlinespace
+\texttt{matterTransportBreakingBranch} &
+\texttt{targetCarrierMisaligned} &
+Matter-effect or transport behavior is a compatibility discriminator. Moving
+the ratio requires an operator strengthening not conservative on the fixed
+base, hence target-carrier misalignment. \\
+\addlinespace
+\texttt{absoluteMassImportBranch} &
+\texttt{boundaryNotDeclared} &
+Absolute mass, beta-decay, or cosmological information is boundary data for a
+different measurement family and cannot be promoted as an undeclared
+splitting-ratio selector. \\
+\addlinespace
+\texttt{diracMajoranaSelectorBranch} &
+\texttt{targetAncestryNotSeparated} &
+Dirac/Majorana status may constrain models, but as a ratio selector it
+introduces endpoint or identity ancestry not separated from the target
+derivation. \\
+\addlinespace
+\texttt{identitySelectorBranch} &
+\texttt{carrierInadequate} &
+Identity, normalization, chart, or representation choices are quotient skin or
+bookkeeping unless they alter standing-bearing content; as selectors they lack
+an adequate carrier. \\
+\bottomrule
+\end{tabular}
+\caption{UEAP coordinate failures assigned to non-current neutrino draft
+branches.}
+\label{tab:branch-audit}
+\end{table}
+
+\section{Main Closure Theorem}
+
+\begin{theorem}[Non-degenerate UEAP branch closure]
+In the admitted non-degenerate same-scope neutrino regime, the hybrid joint
+restriction has no non-current survivor. Its unique survivor is the current
+standing ratio.
+\end{theorem}
+
+\begin{proof}
+Let \(r\) be a ratio in the hybrid joint restriction. If the route carrier of
+\(r\) has the current draft class, then by current-class point identification
+\(r\) is the current standing ratio.
+
+Suppose instead that the route carrier of \(r\) has a non-current draft class.
+Since \(r\) survives the hybrid joint restriction, the branch must claim UEAP
+sigma-legitimacy. But by Table~\ref{tab:branch-audit}, and by the fact that
+UEAP is the kernel operationalized in a non-degenerate regime, the same branch
+has a kernel-forced UEAP coordinate failure. A coordinate failure is a UEAP
+legitimacy blocker, and a legitimacy blocker excludes sigma-legitimacy.
+Contradiction.
+
+Thus no non-current branch survives. The only possible survivor is the
+current branch, and the current branch is point-identifying. Therefore the
+hybrid joint restriction is a singleton with value \(C.\mathrm{ratio}\).
+\end{proof}
+
+\begin{corollary}[No second point]
+There is no second point in the hybrid joint restriction.
+\end{corollary}
+
+\begin{proof}
+Immediate from the singleton theorem.
+\end{proof}
+
+\section{Formalization Map}
+
+The paper proof corresponds to the following Lean declarations:
+\[
+\begin{array}{ll}
+\text{Kernel admission} &
+\texttt{AASCNondegenerateKernelInteriorAdmission},\\
+\text{UEAP operationalization} &
+\texttt{AASCNondegenerateUEAPKernelOperationalization},\\
+\text{Coordinate ledger} &
+\texttt{AASCUEAPCitedCoordinateBranchLedger},\\
+\text{Branch audit} &
+\texttt{AASCBranchImpossibilityAudit},\\
+\text{Singleton theorem} &
+\texttt{nondegenerateUEAPKernelOperationalizationGiveJointSingleton},\\
+\text{No-second-point theorem} &
+\texttt{nondegenerateUEAPKernelOperationalizationRulesOutSecondPoint}.
+\end{array}
+\]
+
+The logical path in Lean is:
+\[
+\begin{aligned}
+&\texttt{AASCNondegenerateUEAPKernelOperationalization}\\
+&\quad\Longrightarrow
+\texttt{AASCUEAPCitedCoordinateBranchLedger}\\
+&\quad\Longrightarrow
+\texttt{AASCUEAPCoordinateBranchRegistry}\\
+&\quad\Longrightarrow
+\texttt{AASCUEAPBranchAudit}\\
+&\quad\Longrightarrow
+\texttt{AASCBranchImpossibilityAudit}\\
+&\quad\Longrightarrow
+\texttt{HybridJointRestrictionSingleton}.
+\end{aligned}
+\]
+
+\section{Corpus Handles}
+
+The proof appeals to the following source families.
+
+\begin{itemize}[leftmargin=2em]
+\item \emph{Claim Standing and Legitimacy}: UEAP legitimacy, blockers, and
+sigma-legitimacy exclusion.
+\item Kernel and unique-interior papers, including \emph{Unus Solus
+Possibilis Est}: non-degenerate kernel necessity and unique admissible
+interior occupancy.
+\item The Impossibility Suite and \emph{Septem Sigilla Necessitatis}: no
+partial closure and no hidden repair.
+\item Fixed-domain exhaustion, AMetric Boundary, and Closure by Exhaustion:
+quotient-fiber discipline and exhaustion closure.
+\item Fixed-Base Operator Constraints, Collapse of Operator-Level
+Strengthening, and Invariant Selection and Endpoint Structure: operator and
+endpoint selector discipline.
+\item Role-Occupancy Closure under Admissibility: no same-role splitting
+without a new admissible role.
+\item ATS and equivalence-exhaustion results: skin/bookkeeping separation.
+\end{itemize}
+
+\section{Conclusion}
+
+The standing neutrino splitting-ratio closure is obtained by treating the
+target as a non-degenerate same-scope AASC regime. In that regime, the UEAP
+audit is forced by the admissibility kernel. Every non-current branch fails a
+kernel-forced UEAP coordinate, while any branch surviving the hybrid joint
+restriction would have to be UEAP sigma-legitimate. This contradiction removes
+all non-current branches. The current branch is point-identifying by unique
+admissible interior occupancy. Therefore the hybrid joint restriction closes
+to the current standing ratio as a singleton.
+
+\end{document}

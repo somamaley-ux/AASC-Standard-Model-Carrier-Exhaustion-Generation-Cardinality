@@ -1,0 +1,33 @@
+name = "AASCGenerationCardinalityEndpointLeanAudit"
+version = "0.1.0"
+defaultTargets = ["GenerationCardinality"]
+
+[[lean_lib]]
+name = "MaleyLean"
+root = "Main"
+
+[[lean_lib]]
+name = "SM1"
+
+[[lean_lib]]
+name = "SM2"
+
+[[lean_lib]]
+name = "SM3"
+
+[[lean_lib]]
+name = "SM4"
+
+[[lean_lib]]
+name = "SM5"
+
+[[lean_lib]]
+name = "SM6"
+
+[[lean_lib]]
+name = "GenerationCardinality"
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "v4.28.0"

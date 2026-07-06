@@ -1,0 +1,709 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathtools}
+\usepackage{booktabs,longtable,tabularx,array}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{caption}
+
+\hypersetup{colorlinks=false,linkcolor=blue!55!black,citecolor=blue!55!black,urlcolor=blue!55!black,pdfauthor={Amos Jay Maley},pdftitle={Generation Cardinality as a Forced Role-Occupancy Endpoint}}
+\usepackage{hyperref}
+\hypersetup{
+    pdfborder={0 0 0}   % or pdfborder=0 0 0
+}
+\setlength{\parskip}{0.58em}
+\setlength{\parindent}{0pt}
+\setlength{\headheight}{14pt}
+\setlist{nosep,leftmargin=2em}
+\onehalfspacing
+\sloppy
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Generation Cardinality as Forced Role Occupancy}
+\fancyhead[R]{Open-generation endpoint}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\newcommand{\Dgen}{D_{\mathrm{gen}}}
+\newcommand{\DSMopen}{D_{SM}^{\mathrm{open}}}
+\newcommand{\DflavNg}{D_{\mathrm{flavor}}^{N_g}}
+\newcommand{\DSMN}{D_{SM}^{N_g}}
+\newcommand{\DSMthree}{D_{SM}^{3}}
+\newcommand{\Cgauge}{C_{\mathrm{gauge}}}
+\newcommand{\Cmatter}{C_{\mathrm{matter}}}
+\newcommand{\CCCR}{C_{CCR}^{\mathrm{prim}}}
+\newcommand{\CH}{H_{br/fix}}
+\newcommand{\Cflavtrans}{C_{\mathrm{flavor\text{-}transition}}
+}
+\newcommand{\CCPHol}{C_{CP/hol}}
+\newcommand{\ClosedGenCert}{\operatorname{ClosedGenCert}}
+\newcommand{\GenRoleCert}{\operatorname{GenRoleCert}}
+\newcommand{\Residue}{\operatorname{Residue}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\SameScope}{\operatorname{SameScope}}
+\newcommand{\KernelPreserved}{\operatorname{KernelPreserved}}
+\newcommand{\NonDegeneratePhysicalClaim}{\operatorname{NonDegeneratePhysicalClaim}}
+\newcommand{\SameClaim}{\operatorname{SameClaim}}
+\newcommand{\TargetUpdate}{\operatorname{TargetUpdate}}
+\newcommand{\Prim}{\operatorname{Prim}}
+\newcommand{\RoleNecessity}{\operatorname{RoleNecessity}}
+\newcommand{\TargetPreserved}{\operatorname{TargetPreserved}}
+\newcommand{\ComparisonClassPreserved}{\operatorname{ComparisonClassPreserved}}
+\newcommand{\ReferenceStanding}{\operatorname{ReferenceStanding}}
+\newcommand{\Prediction}{\operatorname{Prediction}}
+\newcommand{\Falsification}{\operatorname{Falsification}}
+\newcommand{\GgenThree}{G_{\mathrm{gen}}^{3}}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{protocol}{Protocol}[section]
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[section]
+
+\title{\textbf{Generation Cardinality as a Forced Role-Occupancy Endpoint}\\[0.35em]\large Rank-Matching Closure over the Open-Generation Standard Model Carrier Architecture}
+\author{Amos Jay Maley}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This manuscript proves the open-generation endpoint needed by the Standard Model carrier-exhaustion sequence. The theorem is not a numerical prediction of masses, CKM entries, PMNS entries, mixing angles, CP phases, oscillation probabilities, or anomaly data. It is a same-scope role-occupancy theorem: the Standard Model carrier architecture admits a closed generation-role certificate exactly at cardinality three.
+
+The proof is a rank-matching argument in an open-generation arena \(\Dgen\), not in the already fixed-envelope arenas \(\DflavNg\) or \(\DSMN\). A closed candidate with cardinality \(n\) forces a quotient-normalized direct co-comparability graph \(\Gamma_n\simeq K_n\). Rephasing quotienting identifies independent non-removable transition-orientation residues with the cycle-space quotient, giving
+\[
+\rank \Omega_{\mathrm{raw}}(K_n)=\beta_1(K_n)=\frac{(n-1)(n-2)}{2}.
+\]
+Fixed-domain exhaustion and same-scope operator closure, instantiated in the generation-holonomy arena, prove that the Standard Model generation target requires and licenses exactly one primitive CP/holonomy orientation-residue register:
+\[
+\rank \Omega_{SM\text{-}gen}^{\mathrm{prim}}=1.
+\]
+Closed generation certification therefore requires \(\beta_1(K_n)=1\), forcing \(n=3\). The constructive direction is supplied by the minimal closed transition triangle, unique up to lawful role-incidence permutation.
+
+The kernel used here is not an interpretive overlay on physics. It is the minimal non-degeneracy condition under which sameness, standing, reference, comparison, prediction, and falsification retain determinate objects. The theorem therefore closes the same-scope Standard Model generation-role certificate without using empirical family-count selectors, CKM/PMNS dimension selectors, charged-lepton names, fitted textures, or fourth-generation non-observation. Target-updating and extension theories may contain additional fermion-family structure; such additions do not close the same-scope Standard Model generation-role certificate.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section{Reader orientation}
+
+\subsection{Problem statement}
+Earlier Standard Model carrier papers separate primitive carrier standing from derivative skins, measurements, routes, projections, numerical values, matrix coordinates, and model surfaces. In the fixed-envelope flavor paper, generation labels and fourth-generation claims are governed rather than promoted. The remaining question is stronger: whether the carrier architecture itself forces a generation-role cardinality when the fixed family envelope is opened.
+
+The theorem proved here is
+\[
+\ClosedGenCert(n) \Longleftrightarrow n=3.
+\]
+It is evaluated in \(\Dgen\), an open-generation role arena. It is not evaluated in \(\DflavNg\) or \(\DSMN\), where the family-cardinality load is already governed. This separation prevents circularity: the fixed-envelope papers can close local flavor and matter claims under governance, while the present endpoint supplies the open-generation bridge that later lets SM-6 instantiate the global arena at \(\DSMthree\).
+
+\subsection{Proof overview}
+The proof has four core steps.
+\begin{enumerate}
+\item A closed generation-role certificate forces a complete direct co-comparability graph \(\Gamma_n\simeq K_n\).
+\item Rephasing quotienting identifies independent transition-orientation residues with the cycle-space quotient of \(\Gamma_n\).
+\item Fixed-domain exhaustion and same-scope operator closure prove \(\rank \Omega_{SM\text{-}gen}^{\mathrm{prim}}=1\).
+\item Rank matching gives \((n-1)(n-2)/2=1\), and hence \(n=3\), with a triangular assignment giving positive closure.
+\end{enumerate}
+
+\subsection{Nonclaims}
+The theorem does not derive numerical masses, Yukawa eigenvalues, CKM entries, PMNS entries, mixing angles, CP phase values, neutrino ordering, absolute neutrino masses, or oscillation probabilities. It does not use observed charged-lepton labels, observed neutrino flavor count, LEP data, experimental non-observation of fourth generations, or empirical CP data as selectors. It does not deny BSM physics. A target-changing or extension claim remains scientifically admissible as an extension, burden, or target update; it simply does not close the same-scope Standard Model generation-role certificate.
+
+\subsection{Falsifiability}
+A valid hostile certificate must preserve the same carrier target, defeat registered status and quotient collapse, avoid hidden selectors and hidden load, and close compatible role occupancy with primitive residue rank different from one. Such a certificate would falsify the theorem. It is not reclassified away by vocabulary.
+
+\section{Kernel status and same-scope non-degeneracy}
+
+\begin{definition}[Kernel preservation]
+\(\KernelPreserved(x)\) holds when the standing, reference, sameness, admissibility, comparison-class, prediction, and falsification conditions required for \(x\) to remain a determinate physical claim are preserved.
+\end{definition}
+
+\begin{theorem}[Kernel necessity]
+\[
+\NonDegeneratePhysicalClaim(x)\Rightarrow \KernelPreserved(x).
+\]
+\end{theorem}
+\begin{proof}
+A physical claim can be compared, predicted, or falsified only if it has a target, reference-bearing standing, and a stable comparison class. Without those conditions there is no determinate same claim across transformation or test. The kernel is therefore not a discretionary overlay placed on physical theory; it is the necessity structure that prevents claimhood from degenerating.
+\end{proof}
+
+\begin{theorem}[Sameness requires kernel preservation]
+\[
+\SameClaim(x,y)\Rightarrow \KernelPreserved(x,y).
+\]
+Contrapositively, if kernel preservation fails between \(x\) and \(y\), then \(y\) is not the same claim as \(x\); it is a replacement, degeneration, failed comparison, or target update.
+\end{theorem}
+\begin{proof}
+Sameness is not a bare label. It requires preservation of target identity, admissible redescription, reference-bearing standing, and comparison class. If any of those conditions fail, the relation between \(x\) and \(y\) is not same-claim preservation.
+\end{proof}
+
+\begin{theorem}[Prediction and falsification require non-degenerate reference]
+\[
+\begin{aligned}
+\Prediction(x)\vee\Falsification(x)\Rightarrow{}&\TargetPreserved(x)\wedge\ComparisonClassPreserved(x)\\
+&\wedge\ReferenceStanding(x).
+\end{aligned}
+\]
+\end{theorem}
+\begin{proof}
+A prediction is a prediction of the same claim only when the target and comparison class are preserved. A falsification is a falsification of the same claim only when the failed object remains identifiable as the claim under test. Otherwise disagreement is indistinguishable from target replacement.
+\end{proof}
+
+\section{Theorem-level source reception}
+
+The proof receives theorem outputs, not loose motivation. The following payloads are used: role-occupancy closure for target role sets, eligibility, joint compatibility, and compatible role-covering assignments; role-cardinality closure for residue-role matching and mismatch disposition; generation-count sources for no same-scope generation selector and fixed-boundary cautions; mixing-angle and phase standing for independent-carrier preconditions, rephasing quotient, and CP-residue typing; CP-like holonomy sources for removable-phase deletion and holonomy-class status; neutrino reconstruction sources for boundary reconstruction and no hidden flavor transport; SM-5 for fixed-envelope flavor, generation-label nonpromotion, and fourth-generation branch discipline; SM-6 for target-update, registered-status, hostile-branch, and no-leakage discipline; fixed-domain exhaustion and same-scope operator closure for the no-second-register proof.
+
+\begin{longtable}{L{0.28\textwidth}L{0.36\textwidth}L{0.26\textwidth}}
+\caption{Theorem-level dependency ledger}\label{tab:dep}\\
+\toprule
+Source layer & Received theorem or result & Payload used here\\
+\midrule
+\endfirsthead
+\toprule
+Source layer & Received theorem or result & Payload used here\\
+\midrule
+\endhead
+Role-occupancy closure & Target role set, eligibility, joint compatibility, compatible role-covering assignment & Closed generation certificate grammar\\
+Role-cardinality closure & No cardinality backfitting; mismatch disposition & Blocks bare residue count and field-copy proof\\
+Generation-count support & No same-scope generation selector; no hidden binder & Prevents matrix dimension or observed label selection\\
+Mixing/phase standing & Independent-carrier precondition; rephasing quotient; CP residue criterion & Residue typing after quotient\\
+CP-like holonomy classes & Removable phase deletion; non-removable phases as holonomy classes & Residue status, not cardinality premise\\
+Neutrino reconstruction & Boundary reconstruction; no hidden global flavor transport & PMNS/boundary nonselector discipline\\
+SM-5 flavor endpoint & Flavor-transition and CP/holonomy carriers; fixed-envelope generation branch & Local flavor carrier and nonpromotion inputs\\
+SM-6 closure discipline & Registered status, target update, hostile branch, no leakage & Falsifiability and nonabsorption discipline\\
+Fixed-domain exhaustion & No fifth standing-bearing locus under fixed target & No second primitive residue register\\
+Same-scope operator closure & No new same-scope operator by selector, evaluator, or repair & Second-register eliminator\\
+\bottomrule
+\end{longtable}
+
+\begin{remark}[Circularity audit]
+The CP/holonomy sources are used for residue typing, not as a cardinality premise. This manuscript does not import a three-generation CKM or PMNS dimension, empirical CP violation, or observed family count. The rank-one primitive target theorem is proved below from local fixed-domain instantiation, residue-to-operator conversion, and same-scope operator closure.
+\end{remark}
+
+\section{Open-generation arena and role certificate}
+
+\begin{definition}[Open-generation arena]
+The open-generation arena is
+\[
+\begin{aligned}
+\Dgen=(\DSMopen,\Cgauge,\Cmatter,\CCCR,\CH,\Cflavtrans,\CCPHol,\\
+GenAdm,NoSelector,NoHiddenLoad).
+\end{aligned}
+\]
+It preserves the Standard Model carrier architecture while leaving candidate generation cardinality open.
+\end{definition}
+
+\begin{definition}[Candidate cardinality arena]
+For \(n\in\mathbb N\), \(\Dgen(n)\) is \(\Dgen\) plus a candidate presentation of \(n\) role-distinct generation residues before final role-occupancy closure.
+\end{definition}
+
+\begin{theorem}[Open-arena lifting of the CP/holonomy carrier]
+The carrier role \(\CCPHol\) lifts from the fixed-envelope flavor arena into \(\Dgen\) as a carrier-role requirement without importing fixed generation cardinality.
+\end{theorem}
+\begin{proof}
+SM-5 receives CP/holonomy-residue standing as part of the primitive flavor-side package while treating raw phase coordinates, rephasings, CKM/PMNS coordinates, and generation labels as nonprimitive statuses. This payload requires the flavor-transition carrier and the no-promotion discipline for raw coordinates; it does not require a fixed value of \(N_g\). In \(\Dgen\), those role and status conditions are retained while cardinality remains open. The primitive live rank is therefore determined internally by the present proof.
+\end{proof}
+
+\begin{definition}[Generation role certificate]
+A candidate \(r\) satisfies \(\GenRoleCert(r)\) when
+\[
+\GenRoleCert(r):=R(r)\wedge Q(r)\wedge W(r)\wedge M(r)\wedge F(r)\wedge B(r)\wedge \Omega(r)\wedge S(r)\wedge J(r),
+\]
+where \(R\) is representation-response eligibility, \(Q\) charge-lattice compatibility, \(W\) weak-chiral compatibility, \(M\) mass-response-slot compatibility, \(F\) flavor-transition participation, \(B\) boundary-reconstruction compatibility, \(\Omega\) CP/holonomy-residue compatibility, \(S\) no-selector compliance, and \(J\) joint compatibility.
+\end{definition}
+
+\begin{definition}[Presentation quotient]
+Candidates are equivalent, \(x\sim_{role} y\), when their difference is only a field-copy label, family-label permutation, basis choice, rephasing convention, matrix-coordinate presentation, mass-value display, numerical fit, detector route, or observed-family name. Define
+\[
+Residue_n:=\Residue(\Dgen(n))/\sim_{role}.
+\]
+\end{definition}
+
+\begin{lemma}[No generation by presentation]
+Field-copy multiplicity, matrix-size enlargement, mass-value addition, anomaly repetition, and family-label syntax do not create role-distinct generation residues.
+\end{lemma}
+\begin{proof}
+Presentation changes can be lawful representatives, registered coordinates, burdens, or target-update pressures. They become role-distinct residues only after satisfying \(\GenRoleCert\) after quotienting. Therefore presentation multiplicity is deleted before cardinality is evaluated.
+\end{proof}
+
+\section{Closed generation certificate}
+
+\begin{definition}[Closed generation certificate]
+\(\ClosedGenCert(n)\) holds iff there exists a forced target role set \(R_T(\Dgen,GenerationRole)\), a live quotient-normalized residue set \(Residue^{live}_n\), and a unique compatible role-covering assignment
+\[
+\sigma:R_T(\Dgen,GenerationRole)\to Residue^{live}_n
+\]
+modulo lawful role-incidence automorphism, such that all eligibility and joint-compatibility fields close and there is no hidden selector, hidden load, target update, or surplus primitive residue.
+\end{definition}
+
+\begin{lemma}[Certificate implies live transition rank match]
+If \(\ClosedGenCert(n)\) holds, then
+\[
+\rank\Omega_{live}(\Gamma_n)=\rank\Omega_{SM\text{-}gen}^{prim}.
+\]
+\end{lemma}
+\begin{proof}
+A closed certificate must occupy the primitive target residue rank exactly. Smaller live rank under-occupies the CP/holonomy-residue role. Larger live rank introduces surplus independent primitive transition-circuit load. Role-occupancy closure permits neither under-residue nor over-residue inside a fixed target.
+\end{proof}
+
+\section{No-selector theorem}
+
+\begin{theorem}[No-selector theorem]
+Let \(x\) be an empirical family surface, matrix dimension, field-copy display, mass table, fitted texture, or observed flavor label. If \(x\) lacks a role-set forcing certificate in \(\Dgen\), then \(x\) cannot function as a proof of generation cardinality:
+\[
+EmpiricalFamilySurface(x)\wedge \neg RoleSetForcingCert(x)\Rightarrow \neg GenerationCardinalityProof(x).
+\]
+\end{theorem}
+\begin{proof}
+The master classifier blocks primitive standing from field symbols, matrix entries, numerical values, measurements, routes, projections, and model names without carrier certificates. SM-5 blocks generation-label, field-duplication, matrix-size, and mass-value promotion. Cardinality-readiness discipline blocks current-family residue and scalar-output promotion without quotient normalization and final cardinality proof. Therefore no empirical or presentation surface selects \(n\) before role-set forcing closes.
+\end{proof}
+
+\section{Transition graph normal form}
+
+\begin{definition}[Generation-transition graph]
+For a candidate \(n\)-presentation, \(\Gamma_n\) has vertices given by role-distinct candidate generation residues after presentation quotient. An edge \(e_{ij}\) is present when \(r_i\) and \(r_j\) are directly co-comparable under the same matter/mass/weak/flavor-transition certificate.
+\end{definition}
+
+\begin{definition}[Direct co-comparability]
+Two role-distinct occupants are directly co-comparable when the same certified architecture supplies common representation-response, charge-lattice, weak-response, mass-response-slot, flavor-transition, rephasing/basis quotient, and boundary-reconstruction comparison types without an added selector or target change.
+\end{definition}
+
+\begin{lemma}[Pairwise completeness is forced]
+If \(\ClosedGenCert(n)\) holds, every two role-distinct generation occupants are directly co-comparable.
+\end{lemma}
+\begin{proof}
+A closed generation certificate assigns all live residues to one target role architecture. If a pair lacks the common representation, charge, weak, mass, flavor, rephasing, or boundary comparison type, then a certificate field fails. If a rule declares one pair incomparable while others remain comparable, a hidden selector has entered. If a pair is connected only through a new mediator, hidden load has entered. Each case contradicts \(\ClosedGenCert(n)\).
+\end{proof}
+
+\begin{lemma}[Complete graph normal form]
+If \(\ClosedGenCert(n)\) holds, then
+\[
+\Gamma_n\simeq K_n.
+\]
+\end{lemma}
+\begin{proof}
+By pairwise completeness, every pair of distinct live residues is joined by a direct co-comparability edge. Hence the graph has all \(\binom n2\) edges among its \(n\) vertices, which is exactly \(K_n\).
+\end{proof}
+
+\begin{definition}[Circuit rank]
+For a connected finite graph \(G\),
+\[
+\beta_1(G)=|E(G)|-|V(G)|+1.
+\]
+For \(K_n\),
+\[
+\beta_1(K_n)=\binom n2-n+1=\frac{(n-1)(n-2)}{2}.
+\]
+\end{definition}
+
+\begin{lemma}[First exact circuit rank]
+For \(n\ge 1\),
+\[
+\beta_1(K_n)=1\Longleftrightarrow n=3.
+\]
+\end{lemma}
+\begin{proof}
+\(\beta_1(K_n)=1\) gives \((n-1)(n-2)=2\), so \(n^2-3n=0\). In the nonempty connected case, the only solution is \(n=3\).
+\end{proof}
+
+\begin{longtable}{ccc}
+\caption{Circuit rank of the closed co-comparability normal form}\label{tab:rank}\\
+\toprule
+\(n\) & \(\Gamma_n\) & \(\beta_1(K_n)\)\\
+\midrule
+\endfirsthead
+\toprule
+\(n\) & \(\Gamma_n\) & \(\beta_1(K_n)\)\\
+\midrule
+\endhead
+0 & none & no occupancy\\
+1 & \(K_1\) & 0\\
+2 & \(K_2\) & 0\\
+3 & \(K_3\) & 1\\
+4 & \(K_4\) & 3\\
+5 & \(K_5\) & 6\\
+\bottomrule
+\end{longtable}
+
+\section{Rephasing quotient and cycle-space residue}
+
+Edge phases, matrix entries, and fitted mixing angles are not primitive. They become primitive-relevant only after vertex-local rephasings, basis choices, and coordinate conventions are removed and a closed circuit residue remains.
+
+\begin{definition}[Edge-coordinate group and vertex rephasing]
+For a transition graph \(\Gamma\), let \(C^1(\Gamma)\) denote edge phase-coordinate assignments and \(C^0(\Gamma)\) vertex-local phase choices. The rephasing boundary map
+\[
+d:C^0(\Gamma)\to C^1(\Gamma)
+\]
+records the edge-coordinate change induced by rephasing vertex representatives.
+\end{definition}
+
+\begin{definition}[Cycle-space residue]
+The rephasing-quotient residue is
+\[
+\Omega_{res}(\Gamma)=C^1(\Gamma)/dC^0(\Gamma),
+\]
+restricted to closed transition-circuit classes.
+\end{definition}
+
+\begin{lemma}[Rephasing deletion]
+A phase assignment in \(dC^0(\Gamma)\) is a rephasing skin and does not contribute to primitive CP/holonomy residue.
+\end{lemma}
+\begin{proof}
+Vertex-local rephasing changes representatives while preserving role occupants and transition standing. It is a registered phase/rephasing status, not primitive holonomy residue.
+\end{proof}
+
+\begin{theorem}[Cycle quotient theorem]
+For a closed generation-transition graph \(\Gamma_n\), the independent non-removable transition phase residues are exactly the cycle-space residues:
+\[
+\rank \Omega_{res}(\Gamma_n)=\beta_1(\Gamma_n).
+\]
+\end{theorem}
+\begin{proof}
+Quotienting by vertex-local rephasings removes exact edge-coordinate changes. What remains are closed orientation sums around independent circuits. A spanning tree has no such residue; each additional independent edge beyond a tree creates exactly one independent circuit residue. Thus the rank is \(|E|-|V|+1=\beta_1(\Gamma_n)\).
+\end{proof}
+
+\begin{corollary}[Complete-graph residue rank]
+If \(\ClosedGenCert(n)\), then
+\[
+\rank\Omega_{res}(\Gamma_n)=\beta_1(K_n)=\frac{(n-1)(n-2)}{2}.
+\]
+\end{corollary}
+
+\section{Generation-holonomy fixed-domain instantiation}
+
+\begin{definition}[Generation-holonomy arena]
+The local arena is
+\[
+G_{hol}=(X_{gen},\Omega_{op},\simeq_{Adm},G_{prim},T_{reg}).
+\]
+Here \(X_{gen}\) is the standing-bearing generation-transition carrier; \(\Omega_{op}\) contains candidate orientation-residue operators; \(\simeq_{Adm}\) is lawful redescription by basis change, rephasing, field-label, family-label, coordinate, and matrix-skin change; \(G_{prim}\) is the primitive-residue standing gate; and \(T_{reg}\) contains raw phase, matrix-coordinate, boundary, calibration, route, projection, extension, target-update, burden, and failed-primitive statuses.
+\end{definition}
+
+\begin{theorem}[Local fixed-domain instantiation]
+The arena \(G_{hol}\) satisfies the hypotheses needed for fixed-domain exhaustion and same-scope operator closure.
+\end{theorem}
+\begin{proof}
+The boundary signature is the Standard Model carrier target together with flavor transition, CP/holonomy residue, no-selector discipline, and role-occupancy grammar. The evaluated fragment is the quotient-normalized closed transition-circuit class. The standing partition is primitive residue, registered coordinate or boundary status, extension, target update, burden, or failed primitive. The lawful quotient is generated by basis, rephasing, field-label, family-label, matrix-coordinate, and presentation redescription. Admissible continuation is transition-comparison and role-occupancy continuation without post-hoc repair. The role-typing carrier is flavor-transition/CP-holonomy standing; generation governance is not a primitive carrier. Empirical labels, matrix dimensions, zero settings, fitted textures, masses, and likelihood preferences carry no primitive authority. Any additional residue gate not standing-fixed by \(X_{gen}\) is imported auxiliary data. These clauses instantiate the fixed-domain comparison class.
+\end{proof}
+
+\begin{corollary}[No untyped import into generation holonomy]
+A proposed extra orientation-residue authorizer is same-scope only if it is well typed in \(G_{hol}\). Otherwise it is target update, extension, burden, or failed primitive.
+\end{corollary}
+
+\section{Raw, live, and primitive residue ranks}
+
+\begin{definition}[Raw, live, and primitive ranks]
+The raw transition residue module is
+\[
+\Omega_{raw}(\Gamma)=C^1(\Gamma)/dC^0(\Gamma),
+\]
+with rank \(\beta_1(\Gamma)\). The live residue module \(\Omega_{live}(\Gamma)\subseteq\Omega_{raw}(\Gamma)\) consists of quotient residues that remain standing-relevant after admissible quotienting and no-selector normalization. The primitive target rank \(\Omega_{SM\text{-}gen}^{prim}\) is the primitive same-scope generation target's CP/holonomy orientation-residue register.
+\end{definition}
+
+\begin{theorem}[Role-incidence liveness]
+If \(\ClosedGenCert(n)\) holds, then every independent circuit of \(\Gamma_n\) is live:
+\[
+\Omega_{live}(\Gamma_n)=\Omega_{raw}(\Gamma_n).
+\]
+\end{theorem}
+\begin{proof}
+A generation role is a vertex as participating in the full closed transition-incidence structure. An edge is a certified co-comparability channel, not a fitted nonzero amplitude. Therefore an independent circuit in \(\Gamma_n\) is an incidence relation among live role occupants. Suppressing such a circuit requires quotient collapse, hidden selector, registered-only role closure, or target change. These alternatives are exactly the fixed-domain loci: quotient, standing partition, boundary/role typing, and admissible continuation. \(\ClosedGenCert(n)\) excludes all four as same-scope closed certificates, so every raw independent circuit is live.
+\end{proof}
+
+\begin{corollary}[Live rank of a closed candidate]
+If \(\ClosedGenCert(n)\), then
+\[
+\rank\Omega_{live}(\Gamma_n)=\rank\Omega_{raw}(\Gamma_n)=\beta_1(K_n).
+\]
+\end{corollary}
+
+\section{Rank-one primitive target theorem}
+
+\subsection{Lower bound}
+\begin{theorem}[Primitive carrier nonvacuity]
+A lifted primitive carrier in the open-generation target must carry at least one admissible consequence or forced target role in \(\Dgen\). If it carries none, it is not primitive in \(\Dgen\); it is skin, registered capacity, or bookkeeping.
+\end{theorem}
+\begin{proof}
+A primitive carrier cannot be a decorative capacity. If a standing-bearing component has no target role, no quotient-level consequence, and no admissible effect, fixed-domain role exhaustiveness classifies it as skin or bookkeeping. Treating an empty capacity as primitive would add an illicit status between skin and carrier standing.
+\end{proof}
+
+\begin{lemma}[CP/holonomy nonredundancy]
+\[
+\rank \Omega_{SM\text{-}gen}^{prim}\ge 1.
+\]
+\end{lemma}
+\begin{proof}
+The received flavor package distinguishes flavor-transition standing from CP/holonomy-residue standing while registering raw phase coordinates and rephasings as nonprimitive. If the primitive target rank were zero, the CP/holonomy carrier would supply no quotient-level primitive consequence distinct from flavor transition or phase-coordinate status. By primitive carrier nonvacuity, it would collapse to skin or bookkeeping, contradicting its lifted primitive-carrier role.
+\end{proof}
+
+\subsection{Upper bound}
+\begin{lemma}[Residue-to-operator bridge]
+Let \(\omega_1\) be an admitted primitive orientation residue. If \(\omega_2\) is independent of \(\omega_1\) and asserted as primitive same-scope residue, then \(\omega_2\) induces a second same-scope standing-relevant operator on \(X_{gen}\).
+\end{lemma}
+\begin{proof}
+A primitive residue is not a value; it affects the primitive standing partition for closed transition-circuit classes. If the consequence functional of \(\omega_2\) factors through \(\omega_1\), it is bookkeeping-equivalent, quotient-duplicate, or registered coordinate status. If it does not factor, it changes the primitive standing partition or adds a second primitive consequence slot. That is a same-scope standing-relevant operator.
+\end{proof}
+
+\begin{proposition}[Second-residue branch exhaustion]
+Let \(\omega_2\) be independent of an admitted primitive residue \(\omega_1\). In the fixed same-scope generation target, \(\omega_2\) is quotient/bookkeeping duplicate, registered coordinate or boundary status, hidden selector/evaluator import, anchor motion or target update, tensor-load extension, burden, failed primitive, or hostile branch. It is not a second closed same-scope primitive register.
+\end{proposition}
+\begin{proof}
+If \(\omega_2\) is fixed by the existing quotient, it is bookkeeping. If it changes no admissible consequence, it is skin or registered status. If it requires a selector, evaluator, completion, canonical representative, or repair, it is imported auxiliary data and inadmissible. If it changes boundary typing or the evaluated fragment, it is target update. If it adds a new primitive slot, it is tensor-load extension or a new target component. If asserted without closing those obligations, it is burden or failed primitive. A valid hostile certificate would falsify the theorem rather than be absorbed. Fixed-domain exhaustion leaves no fifth governance-bearing locus.
+\end{proof}
+
+\begin{lemma}[No surplus primitive register]
+\[
+\rank \Omega_{SM\text{-}gen}^{prim}\le 1.
+\]
+\end{lemma}
+\begin{proof}
+Assume two independent primitive registers. By the residue-to-operator bridge, the second induces a same-scope standing-relevant operator on \(X_{gen}\). By second-residue branch exhaustion, that operator is bookkeeping, registered, inadmissible, target-updating, extension, burden, failed primitive, or hostile. None is a second closed primitive register inside the same target.
+\end{proof}
+
+\begin{theorem}[Rank-one primitive target theorem]
+\[
+\rank \Omega_{SM\text{-}gen}^{prim}=1.
+\]
+\end{theorem}
+\begin{proof}
+The lower bound is CP/holonomy nonredundancy. The upper bound is no surplus primitive register. Hence the primitive same-scope generation target has exactly one independent CP/holonomy orientation-residue register.
+\end{proof}
+
+\begin{theorem}[Rank-matching condition]
+If \(\ClosedGenCert(n)\), then
+\[
+\rank\Omega_{live}(\Gamma_n)=\rank\Omega_{SM\text{-}gen}^{prim}=1,
+\]
+and consequently \(\beta_1(K_n)=1\).
+\end{theorem}
+\begin{proof}
+A closed generation certificate must realize the primitive target rank without underfilling or overfilling. Live rank equals raw rank for closed certificates, raw rank equals \(\beta_1(K_n)\), and the primitive target rank is one.
+\end{proof}
+
+\section{Boundary and lower-cardinality eliminators}
+
+\begin{lemma}[PMNS and boundary phase nonpromotion]
+PMNS coordinates, oscillation baselines, weak-flavor boundary labels, Majorana-like boundary phases, and neutrino mass-ordering surfaces do not increase \(\rank\Omega_{SM\text{-}gen}^{prim}\) unless they close an independent same-scope primitive CP/holonomy-residue certificate.
+\end{lemma}
+\begin{proof}
+Neutrino reconstruction treats flavor under noncommuting propagation as boundary reconstruction, not globally transported primitive flavor identity. PMNS-like entries and endpoint-sensitive phases are boundary, route, mixing, projection, or burden statuses unless a primitive holonomy certificate closes. If such a certificate closes as an additional independent primitive register, it enters the hostile surplus-register branch rather than silently selecting generation count.
+\end{proof}
+
+\begin{theorem}[Lower-cardinality eliminators]
+\[
+\neg\ClosedGenCert(0),\quad \neg\ClosedGenCert(1),\quad \neg\ClosedGenCert(2).
+\]
+\end{theorem}
+\begin{proof}
+For \(n=0\), no role-covering assignment exists. For \(n=1\), local matter response may exist, but there is no inter-role flavor transition and no circuit. For \(n=2\), \(\Gamma_2\simeq K_2\) and \(\beta_1(K_2)=0\), contradicting the rank-matching condition.
+\end{proof}
+
+\section{Positive closure at three}
+
+\begin{definition}[Minimal circuit incidence positions]
+Let
+\[
+I_3:=V(K_3)/\Aut(K_3)\simeq V(K_3)/S_3
+\]
+be the unordered incidence-position set of the minimal closed generation-transition circuit. Named representatives are expository gauges, not empirical family labels.
+\end{definition}
+
+\begin{lemma}[Rank-one circuit incidence]
+A nonzero primitive closed transition-circuit residue with rank one forces exactly three incidence positions in the minimal same-scope generation target.
+\end{lemma}
+\begin{proof}
+A simple closed circuit requires at least three vertices. One or two vertices have cycle rank zero. A triangle has exactly one independent circuit. Any additional live incidence position in the complete co-comparability normal form raises raw and live cycle rank above one, which is surplus primitive rank unless the candidate quotient-collapses or exits the same-scope target.
+\end{proof}
+
+\begin{theorem}[Target role set forcing at rank one]
+If the open-generation target has primitive holonomy rank one, then
+\[
+R_T(\Dgen,GenerationRole)=I_3=V(K_3)/S_3.
+\]
+\end{theorem}
+\begin{proof}
+The rank-one primitive register forces exactly the minimal closed circuit. Fewer incidence positions under-occupy the primitive circuit. More incidence positions force surplus live circuit rank. Since presentation labels, field copies, matrix coordinates, basis choices, and mass displays are quotient-deleted, the target role set is exactly the unordered three-position incidence set.
+\end{proof}
+
+\begin{theorem}[Three-role positive certificate]
+\[
+\ClosedGenCert(3).
+\]
+\end{theorem}
+\begin{proof}
+The forced target role set is \(I_3\). A three-residue presentation supplies exactly three live vertices for the minimal closed transition circuit. The graph is \(K_3\), so it has one independent circuit. Representation, charge, weak, mass-response, flavor-transition, and boundary compatibility are inherited from \(\Dgen\). Rephasing skins are quotient-deleted. The remaining circuit supplies exactly one live CP/holonomy residue, matching the primitive target rank. There is no surplus residue, hidden selector, or hidden load. Uniqueness holds up to the automorphism group \(S_3\).
+\end{proof}
+
+\section{Higher-cardinality eliminators}
+
+\begin{definition}[Surplus residue]
+A candidate \(n\)-presentation has surplus transition-holonomy residue when
+\[
+\rank\Omega_{live}(\Gamma_n)>\rank\Omega_{SM\text{-}gen}^{prim}
+\]
+after presentation and rephasing quotient.
+\end{definition}
+
+\begin{lemma}[Surplus-residue alternatives]
+For \(n>3\), a candidate can avoid surplus primitive residue only by quotient collapse, hidden selector, hidden load, extension disposition, target update, incompatible occupancy, or unresolved hostile role-occupancy burden.
+\end{lemma}
+\begin{proof}
+For \(n>3\), \(\beta_1(K_n)>1\). If extra generators are not live, live role count collapses. If they are declared inert by texture, zero setting, fit, basis, or empirical suppression, a hidden selector has entered. If a new mechanism controls them, new load has entered. If the assignment cannot make the extra generators compatible with the single primitive target register, joint compatibility fails. If closure is asserted without resolving these alternatives, the claim remains burdened.
+\end{proof}
+
+\begin{theorem}[No higher-generation closure]
+For all \(n>3\),
+\[
+\neg\ClosedGenCert(n).
+\]
+\end{theorem}
+\begin{proof}
+If \(n>3\) and \(\ClosedGenCert(n)\), rank matching gives \(\beta_1(K_n)=1\). But \(\beta_1(K_n)>1\) for \(n>3\). Contradiction.
+\end{proof}
+
+\section{Main theorem and Standard Model arc handoff}
+
+\begin{theorem}[Generation cardinality as forced role-occupancy endpoint]
+For every \(n\in\mathbb N\),
+\[
+\ClosedGenCert(n)\Longleftrightarrow n=3.
+\]
+\end{theorem}
+\begin{proof}
+If \(n=3\), the three-role positive certificate closes. If \(n=0,1,2\), the lower-cardinality eliminators block closure. If \(n>3\), the higher-cardinality eliminator blocks closure. These cases exhaust \(\mathbb N\).
+\end{proof}
+
+\begin{corollary}[Target role-cardinality]
+\[
+|R_T(\Dgen,GenerationRole)|=3.
+\]
+\end{corollary}
+
+\begin{corollary}[Quotient residue cardinality]
+For a closed same-scope generation certificate,
+\[
+|Residue_{gen}^{live}|=3.
+\]
+\end{corollary}
+
+\begin{theorem}[Arc handoff]
+The fixed-envelope governance object used by the matter, flavor, and Standard Model closure papers may be instantiated as
+\[
+\GgenThree
+\]
+by the open-generation endpoint. The instantiation is not a primitive carrier addition and does not place generation cardinality inside the primitive carrier package.
+\end{theorem}
+\begin{proof}
+The open-generation theorem closes the role-occupancy question \(\ClosedGenCert(n)\Longleftrightarrow n=3\). Governance in the fixed-envelope papers records family-cardinality load; it is not a carrier. The theorem therefore supplies the value of the governance endpoint while leaving the primitive carrier package unchanged. The global Standard Model closure may be stated over \(\DSMthree\) rather than \(\DSMN\), but generation cardinality remains a forced role-occupancy result, not a new primitive generation carrier.
+\end{proof}
+
+\section{Fourth-generation hostile reconstruction}
+
+\begin{protocol}[Fourth-generation audit]
+A fourth-generation claim must preserve the same target, defeat presentation-only status, avoid increasing live cycle rank above one, avoid hidden selector, avoid hidden load, and close compatible role occupancy. Field-copy syntax, anomaly repetition, new mass values, or a larger matrix do not meet that burden.
+\end{protocol}
+
+\begin{theorem}[Fourth-generation branch]
+A fourth-generation claim is classified as quotient collapse, failed primitive duplication, role-cardinality burden, registered extension, target update, hidden-load violation, hidden-selector violation, or hostile role-occupancy branch. It is not a closed same-scope generation certificate.
+\end{theorem}
+\begin{proof}
+A fourth candidate has \(n=4\), hence \(\beta_1(K_4)=3\). The primitive target rank is one. Unless the surplus rank is lawfully removed, the rank match fails. All lawful removal routes are nonprimitive dispositions or target updates; a remaining same-scope assertion bears the hostile certificate burden.
+\end{proof}
+
+\section{Conditional reduction}
+
+\begin{theorem}[Conditional reduction under withheld rank-one target]
+Even if the rank-one primitive target theorem is withheld, the following conditional closes:
+\[
+\rank\Omega_{SM\text{-}gen}^{prim}=1
+\Rightarrow
+(\ClosedGenCert(n)\Longleftrightarrow n=3).
+\]
+\end{theorem}
+\begin{proof}
+The complete graph normal form, rephasing-cycle quotient, and rank-matching argument do not depend on the proof of the rank-one target theorem; they use only its conclusion. Therefore rank one implies \(\beta_1(K_n)=1\), which implies \(n=3\), and the positive triangle supplies the reverse implication.
+\end{proof}
+
+\section{Referee objection lock}
+
+\begin{longtable}{L{0.32\textwidth}L{0.58\textwidth}}
+\caption{Hostile-referee objections and replies}\label{tab:objections}\\
+\toprule
+Objection & Reply\\
+\midrule
+\endfirsthead
+\toprule
+Objection & Reply\\
+\midrule
+\endhead
+The proof assumes three generations. & The proof begins in \(\Dgen\), not \(\DflavNg\). Cardinality follows from rank matching.\\
+One carrier type can host many residues. & Correct. The proof separately proves that the primitive target rank is exactly one.\\
+The graph argument is metaphorical. & The graph records direct co-comparability slots; the quotient identifies edge phases modulo vertex rephasings with cycle-space residues.\\
+Why complete graph? & \(\Gamma_n\) is a direct co-comparability graph. Missing pairwise co-comparability is certificate failure, not a zero amplitude.\\
+Fourth-generation models can be written. & Field-copy syntax and larger matrices do not close the role-occupancy rank match.\\
+CP violation requiring three generations is empirical. & The proof does not use observed CP violation. It uses structural CP/holonomy-residue rank after rephasing quotient.\\
+PMNS or Majorana phases add phases. & They are boundary, endpoint-sensitive, registered, burden, or target-update statuses unless they close the same primitive certificate.\\
+Anomaly cancellation does not force three. & Correct. Anomaly discipline is a guard, not the proof engine.\\
+\bottomrule
+\end{longtable}
+
+\section{Conclusion}
+
+The Standard Model generation-cardinality question has an open-arena role-occupancy endpoint. A closed generation certificate forces a complete direct co-comparability graph. Rephasing quotienting identifies independent closed transition-orientation residue slots with the cycle rank of that graph. Fixed-domain exhaustion and same-scope operator closure prove a single primitive CP/holonomy generation-transition register. Rank matching then forces \(\beta_1(K_n)=1\), and therefore \(n=3\). The unordered triangular incidence assignment supplies the constructive direction.
+
+The result is not read from empirical family labels, matrix size, or fourth-generation non-observation. It is the unique same-scope role-occupancy endpoint of the Standard Model carrier architecture. Target-updating or extension theories may contain additional fermion-family structure, but such additions do not close the same-scope Standard Model generation-role certificate. The appropriate downstream adjustment is to instantiate fixed family governance as \(\GgenThree\) and to state the final Standard Model carrier-exhaustion theorem over \(\DSMthree\) while keeping generation cardinality outside the primitive carrier package.
+
+\appendix
+\section{Cardinality audit table}
+\begin{longtable}{ccc}
+\toprule
+\(n\) & \(\beta_1(K_n)\) & Certificate status\\
+\midrule
+0 & none/0 & no generation-role occupancy\\
+1 & 0 & no inter-role transition\\
+2 & 0 & transition edge but no closed holonomy circuit\\
+3 & 1 & exact rank match; closed\\
+4 & 3 & surplus residue rank\\
+\(>4\) & \(>3\) & surplus residue rank\\
+\bottomrule
+\end{longtable}
+
+\section{Publication handoff ledger}
+\begin{longtable}{L{0.24\textwidth}L{0.30\textwidth}L{0.36\textwidth}}
+\toprule
+Downstream paper & Adjustment & Interpretation\\
+\midrule
+SM-5 & Remains fixed-envelope local flavor closure & It does not derive \(n=3\); it hands open cardinality to this endpoint.\\
+SM-6 & Replace \(D_{SM}^{N_g}\) by \(D_{SM}^{3}\) & Cardinality is received as forced governance, not a carrier.\\
+Global carrier package & No added generation carrier & \(C_{SM}^{prim}\) remains gauge, matter, CCR, flavor, and Higgs bridge/fixation.\\
+Fourth-generation audit & Route through rank match & Same-scope fourth-generation closure fails unless a hostile certificate defeats the theorem.\\
+\bottomrule
+\end{longtable}
+
+\begin{thebibliography}{99}
+\bibitem{SM1} Amos Jay Maley, \emph{Primitive Carriers, Derivative Skins, and Classifier-Level Prediction Closure in the Standard Model}, manuscript, 2026.
+\bibitem{SM5} Amos Jay Maley, \emph{Flavor Transition, Mixing, and Generation Cardinality}, manuscript, 2026.
+\bibitem{SM6} Amos Jay Maley, \emph{The Standard Model Carrier Exhaustion Closure}, manuscript, 2026.
+\bibitem{Kernel} Amos Jay Maley, \emph{Non-Degenerate Construction and the Kernel of Admissibility}, manuscript, 2026.
+\bibitem{FDE} Amos Jay Maley, \emph{Fixed-Domain Exhaustion}, manuscript, 2026.
+\bibitem{SSOC} Amos Jay Maley, \emph{Same-Scope Operator Closure}, manuscript, 2026.
+\bibitem{RoleOcc} Amos Jay Maley, \emph{Role-Occupancy Closure}, manuscript, 2026.
+\bibitem{RoleCard} Amos Jay Maley, \emph{Role-Cardinality Closure}, manuscript, 2026.
+\bibitem{CPHol} Amos Jay Maley, \emph{CP-like Phases as Holonomy Classes}, manuscript, 2026.
+\end{thebibliography}
+
+\end{document}

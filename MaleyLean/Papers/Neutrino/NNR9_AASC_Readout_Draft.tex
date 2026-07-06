@@ -1,0 +1,496 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue
+}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\title{NNR9 Draft: Lean4-Audited Numerical Readout for the Standing Neutrino Splitting Ratio}
+\author{Draft prepared from the AASC/Lean4 development}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This note records the present AASC/Lean4 status of the numerical readout
+extension of the standing neutrino splitting-ratio program.  The earlier
+endpoint identified the admissible same-scope branch as a singleton but did
+not evaluate that singleton numerically.  The new step builds an AASC
+standing-admission certificate for the same-scope source-row interface of the
+standing neutrino target.  External material is used only as cited provenance
+and row data; it is not treated as the structural proof authority.  From the
+AASC standing-admission certificate, the Lean4 development constructs the
+same-scope row admission object, then constructs a bundled readout certificate
+and proves rational decimal windows for the AASC standing coordinate, for the
+inverse hierarchy coordinate printed by the source, and for the shifted
+hierarchy coordinate.
+
+The Lean4 pipeline is formalized in
+\texttt{MaleyLean.Papers.Neutrino.SourceTheorems.MathlibSpectralOperator}.
+In the local workspace, \texttt{lake build MaleyLean.Papers.Neutrino} passes.
+The file scan found no \texttt{sorry}, \texttt{admit}, \texttt{axiom}, or
+\texttt{unsafe} occurrence in the relevant Lean file.  The broad row-admission
+socket is now discharged from the stronger corpus-shaped certificate
+\texttt{AASCNeutrinoSourceRowStandingAdmission}; the remaining audit burden is
+therefore explicit in that certificate's fields rather than hidden inside a
+single unnamed premise.
+\end{abstract}
+
+\section{Purpose}
+
+The previous NNR endpoint may be summarized as follows:
+\[
+  B_{\rho}^{\mathrm{adm}} = \{\rho_{\nu}^{\mathrm{current}}\}.
+\]
+This is a branch-singleton result.  It says that the current standing ratio is
+the unique admissible same-scope branch, but it does not by itself supply a
+decimal value.  The remaining problem was the construction of a lawful
+numerical evaluator for the unique surviving branch.
+
+The present draft records the AASC standing-admission evaluator route.  The
+evaluator is not built by selecting an empirical best-fit value and not by
+defining the root to be the gap quotient.  Instead, AASC supplies the
+same-scope standing certificate; the cited external package supplies
+provenance and row data; Lean transports the admitted row law through the
+existing AASC readout machinery.
+
+\section{External Source Provenance}
+
+The external source package used for provenance and row data is:
+\begin{quote}
+Mehrdad Pajuhaan, \emph{A closed, fit-free prediction for the neutrino mass
+hierarchy from the charged-lepton emergent pipeline}, Zenodo,
+DOI: \href{https://doi.org/10.5281/zenodo.17169926}{10.5281/zenodo.17169926}.
+\end{quote}
+
+The package contains:
+\begin{itemize}
+  \item \texttt{Mass-Hierarchy-Neutrinos.pdf}
+  \item \texttt{Neutrinos Mass Hierarchy.py}
+\end{itemize}
+
+The companion Python source states that the coefficient pipeline does not use
+neutrino masses or mass-squared splittings to set the coefficients.  In the
+local audit, the relevant lines include the contamination audit, the
+\(P_{1/R}\) definition, the \(k=1,3,5\) row construction, and the printed
+hierarchy readouts.
+
+\section{Coordinate Convention}
+
+The AASC standing coordinate is
+\[
+  \rho = \frac{\Delta m^2_{21}}{\Delta m^2_{31}},
+\]
+that is, the solar-over-atmospheric splitting ratio.
+
+The external source prints the inverse hierarchy coordinate
+\[
+  R_{31} = \frac{\Delta m^2_{31}}{\Delta m^2_{21}},
+\]
+and also the shifted coordinate
+\[
+  R_{3\ell} = R_{31} - \frac{1}{2}.
+\]
+Thus the printed hierarchy coordinate is not the same coordinate as the AASC
+standing ratio.  The bridge is
+\[
+  \rho = R_{31}^{-1}.
+\]
+
+This distinction is formalized in Lean by:
+\[
+\begin{array}{ll}
+\texttt{aascNeutrinoR31\_eq\_R3ell\_plus\_half}, &
+\texttt{aascNeutrinoStandingRatioReadout\_eq\_inv\_R31},\\
+\texttt{aascNeutrinoStandingRatioReadout\_eq\_inv\_R3ell\_plus\_half}.&
+\end{array}
+\]
+
+\section{Source Row Law}
+
+The AASC source-row law used in the Lean translation is:
+\[
+  P_{1/R}(k) = 1 + \beta k^2 + \delta k^4,
+  \qquad k \in \{1,3,5\}.
+\]
+The finite-decimal source readback is:
+\[
+  \beta = 0.0000780161359733586,
+  \qquad
+  \delta = 0.0119354363008418,
+  \qquad
+  s = 1.
+\]
+
+The mass-squared row expression used by Lean is:
+\[
+  L(k) = k^4 P_{1/R}(k).
+\]
+The corresponding Lean objects are:
+\[
+\begin{array}{ll}
+\texttt{aascNeutrinoBeta},&
+\texttt{aascNeutrinoDelta},\\
+\texttt{aascNeutrinoScale},&
+\texttt{aascNeutrinoP1OverR},\\
+\texttt{aascNeutrinoMassSquaredLevel},&
+\texttt{aascNeutrinoNumeralParameterTable}.
+\end{array}
+\]
+
+\section{Lean4 Formalization Status}
+
+The formalization is in:
+\[
+  \texttt{MaleyLean.Papers.Neutrino.SourceTheorems.MathlibSpectralOperator}.
+\]
+
+The local build command is:
+\[
+  \texttt{lake build MaleyLean.Papers.Neutrino}.
+\]
+This build succeeds in the current workspace.  The relevant Lean file was
+searched for \texttt{sorry}, \texttt{admit}, \texttt{axiom}, and
+\texttt{unsafe}; no such proof placeholders or extra axiom declarations were
+found.  The only reported Lean output is a pre-existing unrelated linter
+warning recommending \texttt{simp} instead of \texttt{simpa} at one location.
+
+\begin{remark}
+This statement concerns the local Lean4 file and build route.  It does not
+assert that the external physics source is itself proof authority.  The
+external source provides row data and provenance; the AASC admission of those
+rows is represented by an explicit Lean certificate whose fields must be
+audited against the AASC corpus.
+\end{remark}
+
+\section{AASC Admission Interface}
+
+The broad row-admission object is:
+\[
+  \texttt{AASCNeutrinoReadoutSameScopeAdmissionRows}.
+\]
+This object states that the AASC standing three-flavor algebra reads back to
+the AASC-admitted source rows at \(k=1,3,5\), and that the existing QNF,
+singleton, and ordering/audit guards are active.
+
+In the present version this object is produced from the stronger AASC
+standing-admission certificate:
+\[
+  \texttt{AASCNeutrinoSourceRowStandingAdmission}.
+\]
+That certificate names the finite PMNS invariant-witness scope,
+mass-squared-splitting witness standing, same-scope rival exhaustion,
+bridge-anchor admissibility, evidence-ledger completeness, same-standing
+carrier readback, quotient/skin transport compatibility, and source-row
+non-empiricality conditions.  The Lean discharge theorem is:
+\[
+  \texttt{AASCNeutrinoSourceRowStandingAdmission.discharge\_sameScopeAdmissionRows}.
+\]
+
+From the produced admission object, Lean constructs:
+\[
+\begin{array}{ll}
+\texttt{aascNeutrinoSameScopeAdmissionRowsAsPrimitiveEndpointRows},\\
+\texttt{aascNeutrinoSameScopeAdmissionRowsAsSingletonEndpoint},\\
+\texttt{aascNeutrinoSameScopeAdmissionRows\_hasCurrentStandingEvaluation}.
+\end{array}
+\]
+
+The final bundled AASC certificate is:
+\[
+  \texttt{AASCNeutrinoNumericalReadoutCertificate}.
+\]
+
+\section{Numerical Readout}
+
+The source-row computation gives the following certified rational windows:
+\[
+  0.0299486814926010
+  \leq \rho
+  \leq
+  0.0299486814926012,
+\]
+\[
+  33.3904516045907
+  \leq R_{31}
+  \leq
+  33.3904516045908,
+\]
+\[
+  32.8904516045907
+  \leq R_{3\ell}
+  \leq
+  32.8904516045908.
+\]
+
+In Lean these are exposed by:
+\[
+\begin{array}{ll}
+\texttt{aascNeutrinoSourceGapRatio\_in\_decimalWindow},\\
+\texttt{aascNeutrinoSourceInverseHierarchyRatio\_in\_decimalWindow},\\
+\texttt{aascNeutrinoSourceR3ellRatio\_in\_decimalWindow}.
+\end{array}
+\]
+
+After same-scope AASC admission, the selected root inherits these windows:
+\[
+\begin{array}{ll}
+\texttt{aascNeutrinoNumericalReadoutCertificate\_selectedRoot\_in\_decimalWindow},\\
+\texttt{aascNeutrinoNumericalReadoutCertificate\_selectedRoot\_inverse\_in\_decimalWindow},\\
+\texttt{aascNeutrinoNumericalReadoutCertificate\_selectedRoot\_r3ell\_in\_decimalWindow}.
+\end{array}
+\]
+
+\section{Main Endpoint}
+
+\begin{theorem}[AASC standing-admission numerical readout]
+Assume the AASC standing source-row certificate
+\[
+  \texttt{AASCNeutrinoSourceRowStandingAdmission}.
+\]
+This certificate packages the finite PMNS invariant-witness standing,
+mass-squared splitting witness standing, same-scope rival exhaustion,
+bridge-anchor admissibility, evidence-ledger completeness, same-standing
+source-row carrier, quotient/skin transport compatibility, and the
+non-empirical source-row provenance.  From it, Lean constructs
+\[
+  \texttt{AASCNeutrinoReadoutSameScopeAdmissionRows}
+\]
+and then proves:
+\[
+  0.0299486814926010
+  \leq \rho_{\nu}^{\mathrm{current}}
+  \leq
+  0.0299486814926012,
+\]
+\[
+  33.3904516045907
+  \leq
+  \left(\rho_{\nu}^{\mathrm{current}}\right)^{-1}
+  \leq
+  33.3904516045908,
+\]
+and
+\[
+  32.8904516045907
+  \leq
+  \left(\rho_{\nu}^{\mathrm{current}}\right)^{-1} - \frac{1}{2}
+  \leq
+  32.8904516045908.
+\]
+\end{theorem}
+
+The corresponding Lean theorem is:
+\[
+  \texttt{AASCNeutrinoSourceRowStandingAdmission.finalNumericalReadout}.
+\]
+
+\section{Theorem Map}
+
+\begin{center}
+\begin{tabular}{p{0.44\linewidth}p{0.48\linewidth}}
+\toprule
+Manuscript claim & Lean object \\
+\midrule
+Source provenance & \texttt{AASCNeutrinoCoefficientPipelineSourceDerived} \\
+No empirical coefficient import & \texttt{AASCNeutrinoNoMassOrSplittingInputInCoefficientPipeline} \\
+No hidden selected-root encoding & \texttt{AASCNeutrinoNoHiddenSelectedRootEncodingInSourceRows} \\
+Concrete coefficient table & \texttt{aascNeutrinoNumeralParameterTable} \\
+AASC row law & \texttt{aascNeutrinoP1OverR} and \texttt{aascNeutrinoMassSquaredLevel} \\
+Coordinate inversion & \texttt{aascNeutrinoStandingRatioReadout\_eq\_inv\_R31} \\
+Source \(\rho\) window & \texttt{aascNeutrinoSourceGapRatio\_in\_decimalWindow} \\
+Source \(R_{31}\) window & \texttt{aascNeutrinoSourceInverseHierarchyRatio\_in\_decimalWindow} \\
+Source \(R_{3\ell}\) window & \texttt{aascNeutrinoSourceR3ellRatio\_in\_decimalWindow} \\
+Corpus-shaped row admission certificate & \texttt{AASCNeutrinoSourceRowStandingAdmission} \\
+Discharge of broad row socket & \texttt{AASCNeutrinoSourceRowStandingAdmission.discharge\_sameScopeAdmissionRows} \\
+AASC row admission object produced & \texttt{AASCNeutrinoReadoutSameScopeAdmissionRows} \\
+Bundled readout certificate & \texttt{AASCNeutrinoNumericalReadoutCertificate} \\
+Final numerical theorem & \texttt{AASCNeutrinoSourceRowStandingAdmission.finalNumericalReadout} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Interpretation}
+
+The result is a standing-admission numerical readout theorem.  It is stronger
+than the previous branch-singleton endpoint because it supplies rational
+decimal windows for the unique selected root after source-row admission.  It
+is still not an unconditional theorem from the empty context: the manuscript
+must exhibit or cite the AASC standing-admission certificate.  The important
+upgrade is that the certificate is no longer a vague row-admission label; its
+auditable fields are explicitly named in Lean.
+
+In plain language, the current status is:
+\begin{quote}
+Given the AASC source-row standing certificate for the standing neutrino
+splitting target, the Lean4 pipeline, without additional axioms or proof
+placeholders in the relevant file, constructs the same-scope admission rows
+and derives the numerical windows above for the current standing ratio and
+its inverse hierarchy coordinates.
+\end{quote}
+
+\section{One-Anchor Continuation}
+
+The numerical readout above is a ratio/coordinate anchor, not an absolute-mass
+anchor.  Lean now records this distinction in a follow-on one-anchor layer.
+The ratio-only residual family is represented by
+\[
+  m_1^2=t,\qquad
+  m_2^2=t+\rho D,\qquad
+  m_3^2=t+D.
+\]
+For \(D\neq 0\), Lean proves that this family has gap ratio \(\rho\), and
+that changing \(t\) leaves the ratio unchanged.  The relevant objects are:
+\[
+\begin{array}{ll}
+\texttt{threeFlavorRatioOffsetGapFamily},\\
+\texttt{threeFlavorRatioOffsetGapFamily\_gapRatio},\\
+\texttt{threeFlavorRatioOffsetGapFamily\_offsetInvariant}.
+\end{array}
+\]
+
+The MR6-style continuation therefore does not claim zero-anchor absolute
+neutrino masses.  It states the lawful display theorem: a full projective
+mass-squared shape plus one target-aligned metric anchor reconstructs an
+absolute mass-squared triple while preserving the gap ratio.  The Lean objects
+are:
+\[
+\begin{array}{ll}
+\texttt{aascNeutrinoSourceProjectiveShapeLevel},\\
+\texttt{aascNeutrinoSourceProjectiveMassSquaredShape},\\
+\texttt{aascNeutrinoSourceProjectiveMassSquaredShape\_gapRatio\_eq\_source},\\
+\texttt{ThreeFlavorProjectiveMassSquaredShape},\\
+\texttt{ThreeFlavorOneAnchorMassSquaredDisplayAnchor},\\
+\texttt{AASCNeutrinoOneAnchorMetricInput},\\
+\texttt{aascNeutrinoOneAnchorSpectrumReconstruction},\\
+\texttt{aascNeutrinoNNR10OneAnchorMassSpectrumDisplay},\\
+\texttt{aascNeutrinoOneAnchorSpectrum\_gapRatio\_eq\_NNR9GapRatio},\\
+\texttt{aascNeutrinoOneAnchorSpectrum\_gapRatio\_eq\_selectedRoot},\\
+\texttt{aascNeutrinoOneAnchorSpectrum\_anchorLevel\_eq\_anchorValue},\\
+\texttt{AASCNeutrinoOneAnchorAbsoluteMassSquaredSpectrumAvailable},\\
+\texttt{aascNeutrinoOneAnchorMetricInput\_discharge\_absoluteSpectrumNeed},\\
+\texttt{AASCNeutrinoAtmosphericGapMetricAnchor},\\
+\texttt{aascNeutrinoAtmosphericGapScale},\\
+\texttt{aascNeutrinoAtmosphericGapAnchoredMassSquared},\\
+\texttt{aascNeutrinoAtmosphericGapAnchored\_atmosphericGap\_eq\_anchor},\\
+\texttt{aascNeutrinoAtmosphericGapAnchored\_gapRatio\_eq\_selectedRoot},\\
+\texttt{AASCNeutrinoAtmosphericGapAnchoredSpectrumAvailable},\\
+\texttt{aascNeutrinoAtmosphericGapMetricAnchor\_discharge\_spectrumNeed},\\
+\texttt{threeFlavorOneAnchorReconstructedMassSquared},\\
+\texttt{threeFlavorOneAnchorReconstructed\_anchor\_eq},\\
+\texttt{threeFlavorOneAnchorReconstructed\_gapRatio\_eq\_shape},\\
+\texttt{ThreeFlavorOneAnchorNeutrinoSpectrumReconstruction},\\
+\texttt{AASCNNR10OneAnchorNeutrinoMassSpectrumDisplay}.
+\end{array}
+\]
+
+Thus the charged-lepton symmetry is captured in the right form: AASC can
+license a one-anchor metric display once the AASC source-row projective shape
+and a target-aligned anchor are admitted, while the NNR9 ratio readout alone
+does not erase the offset/scale freedom.  In particular, Lean now proves that
+the reconstructed one-anchor spectrum preserves the NNR9 selected root as its
+gap ratio and that the anchored component equals the admitted anchor value.
+For the neutrino-specific case, Lean also provides the atmospheric-gap anchor:
+if an admitted \(\Delta m^2_{31}\) anchor is supplied, the scale
+\[
+  \lambda =
+  \frac{\Delta m^2_{31}}{L_5-L_1}
+\]
+constructs the absolute mass-squared display \(m_i^2=\lambda L_i\), proves
+that the atmospheric gap is exactly the anchor, and preserves the NNR9 selected
+root as the gap ratio.
+
+\subsection{Worked Atmospheric-Gap Display}
+
+For a concrete display, take the normal-ordering atmospheric gap anchor
+\[
+  \Delta m^2_{31}=2.513\times 10^{-3}\,\mathrm{eV}^2.
+\]
+This is an external display anchor, cited from the NuFIT global oscillation
+fit convention in which \(\Delta m^2_{3\ell}=\Delta m^2_{31}>0\) for normal
+ordering; it is not an AASC zero-anchor derivation of absolute mass.
+
+The AASC source-row projective levels are
+\[
+\begin{aligned}
+L_1&=1.0120134524368151586,\\
+L_3&=159.3652713329476282194,\\
+L_5&=5288.4988071409118531250.
+\end{aligned}
+\]
+Hence
+\[
+  \lambda =
+  \frac{2.513\times 10^{-3}}{5288.4988071409118531250
+    -1.0120134524368151586}
+  \approx 4.7527305468\times 10^{-7}.
+\]
+The anchored display is
+\[
+  (m_1^2,m_2^2,m_3^2)=
+  \lambda(L_1,L_3,L_5),
+\]
+and therefore
+\[
+\begin{aligned}
+m_1&\approx 0.0006935\,\mathrm{eV}
+      =0.694\,\mathrm{meV},\\
+m_2&\approx 0.008703\,\mathrm{eV}
+      =8.703\,\mathrm{meV},\\
+m_3&\approx 0.050135\,\mathrm{eV}
+      =50.135\,\mathrm{meV}.
+\end{aligned}
+\]
+The corresponding sum is
+\[
+  \sum_i m_i \approx 0.05953\,\mathrm{eV}
+  =59.53\,\mathrm{meV}.
+\]
+This display checks:
+\[
+  \Delta m^2_{31}=0.002513\,\mathrm{eV}^2,\qquad
+  \Delta m^2_{21}\approx 7.526\times 10^{-5}\,\mathrm{eV}^2,
+\]
+and
+\[
+  \frac{\Delta m^2_{21}}{\Delta m^2_{31}}
+  \approx 0.02994868149.
+\]
+
+\begin{thebibliography}{9}
+
+\bibitem{ExternalZenodoSource}
+M. Pajuhaan,
+\emph{A closed, fit-free prediction for the neutrino mass hierarchy from the
+charged-lepton emergent pipeline},
+Zenodo, 2025.
+DOI: \href{https://doi.org/10.5281/zenodo.17169926}{10.5281/zenodo.17169926}.
+Record: \url{https://zenodo.org/records/17169926}.
+
+\bibitem{NuFIT60}
+I. Esteban, M. C. Gonzalez-Garcia, M. Maltoni, I. Martinez-Soler,
+J. P. Pinheiro, and T. Schwetz,
+\emph{NuFit-6.0: updated global analysis of three-flavor neutrino oscillations},
+JHEP \textbf{2024}, 216 (2024).
+DOI: \href{https://doi.org/10.1007/JHEP12(2024)216}
+{10.1007/JHEP12(2024)216}.
+NuFIT v6.0 results page:
+\url{https://www.nu-fit.org/?q=node/294}.
+
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,3 @@
+import MaleyLean.Papers.ClaimStandingAndLegitimacy.Verbatim.TheoremRegister
+import MaleyLean.Papers.ClaimStandingAndLegitimacy.PaperStatements
+import MaleyLean.Papers.ClaimStandingAndLegitimacy.Surface.Summary

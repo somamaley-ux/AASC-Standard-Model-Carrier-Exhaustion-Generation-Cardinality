@@ -1,0 +1,861 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{hyperref}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue
+}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{remark}{Remark}
+
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Half}{\tfrac12}
+\newcommand{\zetaD}{D_{\zeta}}
+\newcommand{\Stand}{\operatorname{Stand}}
+\newcommand{\Crit}{\operatorname{Crit}}
+\newcommand{\NZ}{\operatorname{NZ}}
+
+\title{AASC-Native Zero-Interior Rigidity Reduction for the Riemann Zeta Interface}
+\author{Draft prepared from the AASC/Lean4 development}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This note records the present AASC/Lean4 kernel-forcing solution route for the
+Riemann-zeta zero-interior problem.  The argument is intentionally
+framework-internal: in a non-degenerate standing-bearing regime,
+framework-internality is forced by the kernel roles of fixed reference,
+admissibility, standing, irreversibility, and same-scope consequence.  The Lean
+development imports the bivalence/kernel surface, the global
+admissible-interior uniqueness theorem, and the minimal-conditions kernel
+paper.  It then instantiates these for canonical zeta zerohood and proves that
+faithful same-regime target-preserving zerohood cannot remain below the AASC
+kernel.
+
+The proof is not a new classical analytic estimate for \(\zeta\), nor a
+Weil-positivity or Hilbert--Polya argument.  The analytic route is not the
+proof route here.  The AASC endpoint says that once zeta zerohood is used
+non-degenerately--that is, as standing-bearing same-regime zerohood of the
+fixed zeta target--the AASC kernel is instantiated by necessity, plural
+standing interiors are excluded, and an off-critical-line standing interior
+would require an unlicensed same-domain horizontal selector.  Such a selector
+is blocked by the AMetric/uniqueness kernel.
+
+The strengthened Lean audit proves that a classical off-line zerohood candidate
+is target-preserving zerohood, that target-leaving is incompatible with that
+hypothesis, and that a faithful same-regime counterexample below the kernel
+cannot be constructed.  Thus an attempted off-line counterexample either leaves
+the target/regime and is degenerate, or preserves the target/regime and is
+kernel-governed.  The kernel-governed branch is exactly the AASC zero-interior
+case, where off-line standing is blocked.  For the canonical mathlib
+standing-as-zerohood predicate, the resulting AASC endpoint is formally
+equivalent to mathlib's \(\texttt{RiemannHypothesis}\).
+\end{abstract}
+
+\section{Purpose}
+
+The target of this draft is the AASC-native Riemann-zeta reduction, not a
+traditional analytic proof.  The classical Riemann Hypothesis is the statement
+\[
+  \zeta(s)=0,\quad s \text{ nontrivial}
+  \quad\Longrightarrow\quad
+  \Re(s)=\Half.
+\]
+The AASC-native theorem has a sharper internal form, conditional on the
+explicit zeta selector/kernel certificate:
+\[
+  \NZ_{\zeta}(s) \wedge \Stand_{\zeta}(s)
+  \quad\Longrightarrow\quad
+  \Re(s)=\Half,
+\]
+where \(\NZ_{\zeta}(s)\) means nontrivial zeta zero-support in the fixed zeta
+interface, and \(\Stand_{\zeta}(s)\) means standing-bearing use inside the
+non-degenerate AASC zeta regime.
+
+This distinction matters.  The analytic problem asks for an unconditional
+classical implication from analytic zerohood alone.  The AASC problem asks
+what follows once zero-support enters faithful same-regime standing-bearing
+use.  Inside that regime, the AASC kernel is not optional; it is forced by the
+conditions that make the use non-degenerate.  A purported counterexample that
+does not preserve the target is degenerate; a purported counterexample that
+does preserve the target is kernel-governed.
+
+\section{Target Preservation and Kernel Forcing}
+
+The current Lean development isolates the decisive target fork:
+\[
+\texttt{classical\_off\_line\_zerohood\_is\_target\_preserving},
+\qquad
+\texttt{classical\_zerohood\_target\_leaving\_impossible}.
+\]
+An off-line classical zerohood candidate still asserts canonical zeta
+zerohood.  Therefore it is not target-leaving merely by being off-line.  If it
+does leave zerohood, it has left the target and is not a faithful same-regime
+counterexample.
+
+The minimal-conditions kernel paper is imported through:
+\[
+\texttt{constructional\_use\_forces\_kernel\_package}
+\]
+and:
+\[
+\texttt{no\_faithful\_same\_regime\_counterexample\_below\_kernel}.
+\]
+Specialized to canonical zeta zerohood, Lean proves:
+\[
+\texttt{classical\_zeta\_zerohood\_construction\_forces\_kernel}
+\]
+and:
+\[
+\texttt{no\_classical\_zeta\_zerohood\_same\_regime\_counterexample\_below\_kernel}.
+\]
+Thus a faithful same-regime zeta-zerohood counterexample cannot occupy a
+strictly below-kernel position.  It must either stop being a faithful
+same-regime zerohood object, or instantiate the kernel.
+
+\section{Framework-Internality Is Forced}
+
+\begin{definition}[Non-degenerate proof regime]
+A proof regime is non-degenerate when its evaluations govern same-scope
+standing-bearing commitment or reuse while preserving:
+\begin{itemize}
+  \item determinate reference,
+  \item prior admissibility,
+  \item standing-bearing use,
+  \item irreversible consequence,
+  \item prohibition of silent redescription,
+  \item scope integrity,
+  \item fail-closed handling.
+\end{itemize}
+\end{definition}
+
+\begin{proposition}[Framework-internality]
+Any non-degenerate proof regime induces an internal admissibility framework.
+\end{proposition}
+
+\begin{proof}
+If the regime preserves the kernel roles, then the standing predicate,
+admissibility predicate, continuation relation, reference fixation, prior
+gate, irreversibility, scope discipline, and fail-closed rule already form an
+internal framework.  A purported external assessment that preserves these
+roles is therefore the same kind of framework.  A purported external
+assessment that does not preserve them is not a non-degenerate proof of the
+same target.
+\end{proof}
+
+In Lean this is:
+\[
+\texttt{framework\_internality\_unavoidable}.
+\]
+
+\section{Kernel Instantiation}
+
+The RH development imports the bivalence/non-degenerate-reasoning surface and
+instantiates it for the local proof-regime object.
+
+The Lean adapter is:
+\[
+\texttt{NonDegenerateProofRegime.toGovernanceSystem}.
+\]
+
+From the non-degenerate evidence, Lean proves:
+\[
+\texttt{nondegenerate\_regime\_instantiates\_AASCClass},
+\]
+and:
+\[
+\texttt{nondegenerate\_regime\_instantiates\_kernel\_roles}.
+\]
+
+These are not RH assumptions.  They say that a regime satisfying the
+non-degenerate governance clauses instantiates the AASC-class/kernel surface
+already proved in the kernel papers.
+
+\section{Fixed Zeta Interface}
+
+The abstract Lean interface is:
+\[
+\texttt{ZetaInterface}.
+\]
+It contains:
+\[
+\begin{array}{ll}
+\texttt{zero}, & \text{the zero-support predicate},\\
+\texttt{criticalStrip}, & \text{the nontrivial-zero context},\\
+\texttt{criticalLine}, & \text{the critical-line predicate},\\
+\texttt{standing}, & \text{standing-bearing AASC use},\\
+\texttt{zetaReferenceFixed}, & \text{fixed zeta reference},\\
+\texttt{invariantBundleFixed}, & \text{fixed invariant bundle},\\
+\texttt{zeroDivisorTransportFixed}, & \text{fixed zero-divisor transport}.
+\end{array}
+\]
+
+The concrete mathlib adapter is:
+\[
+\texttt{classicalRiemannZetaInterface}.
+\]
+It uses mathlib's \(\texttt{riemannZeta}\), the nontrivial-zero context from
+mathlib's formal \(\texttt{RiemannHypothesis}\), and a parameterized
+\(\texttt{Standing}\) predicate.  The standing predicate is deliberately left
+external; it is not defined as critical-line support.
+
+\begin{remark}[No RH by definition]
+The file proves the audit lemma
+\[
+\texttt{criticalLineStanding\_zerohoodBridge\_is\_RH}.
+\]
+It states that defining standing as \(s.\mathrm{re}=\Half\) would make the
+zerohood-to-standing bridge equivalent to RH itself.  That shortcut is
+therefore not used.
+\end{remark}
+
+\section{Global Uniqueness}
+
+The kernel paper supplies admissible-interior uniqueness.  The RH development
+imports this as:
+\[
+\texttt{PaperUniquenessOfAdmissibleInteriorCoreStatement}.
+\]
+
+The fixed zeta standing system is:
+\[
+\texttt{ZetaInterface.toStandingSystem}.
+\]
+
+Lean then proves:
+\[
+\texttt{zeta\_global\_uniqueness\_instantiated},
+\]
+which states that any two standing-complete candidate interiors of the fixed
+zeta standing system are lawfully equivalent.  It also proves:
+\[
+\texttt{zeta\_no\_plural\_standing\_interiors}.
+\]
+
+Thus plural standing interiors are not available inside a non-degenerate AASC
+zeta regime.
+
+\section{Selector Exclusion}
+
+The off-critical-line obstruction is not symmetry failure.  Off-line orbits
+are compatible with the functional equation and conjugation.  The obstruction
+is selector dependence.
+
+The Lean certificate packages:
+\[
+\texttt{SameDomainSelectorKernel}.
+\]
+Its kernel-native content is:
+\begin{quote}
+If a same-domain selector is allowed to carry standing, then it must already
+be fixed by the invariant bundle.  If a selector is not invariant-fixed, then
+it cannot coexist with standing.
+\end{quote}
+
+The derived Lean theorem is:
+\[
+\texttt{SameDomainSelectorKernel.selector\_blocks\_standing}.
+\]
+
+For the zeta interface, the hostile-referee-facing certificate is:
+\[
+\texttt{ZetaKernelBridgeCertificate}.
+\]
+It exposes the exact bridge fields:
+\[
+\begin{array}{ll}
+\texttt{kernel}, & \text{the instantiated zeta kernel package},\\
+\texttt{horizontalSelector}, & \text{the off-line real-part selector class},\\
+\texttt{fixedByInvariantBundle}, & \text{invariant-fixed selector status},\\
+\texttt{selectorKernel}, & \text{same-domain selector exclusion},\\
+\texttt{analytic\_zerohood\_has\_standing}, & \text{classical bridge field},\\
+\texttt{off\_line\_support\_requires\_selector}, & \text{zeta-specific selector bridge}.
+\end{array}
+\]
+
+For the AASC-native theorem, the key point is that standing is already present
+in the statement.  Therefore the theorem does not need the separate classical
+bridge
+\[
+  \texttt{analytic\_zerohood\_has\_standing}.
+\]
+
+\section{Main AASC-Native Endpoint}
+
+\begin{theorem}[AASC-native zero-interior rigidity]
+Let \(\zetaD\) be a fixed non-degenerate AASC zeta interface.  Let \(s\) be a
+nontrivial zeta zero-support in \(\zetaD\).  If \(s\) has standing in
+\(\zetaD\), then \(s\) is critical-line supported:
+\[
+  \NZ_{\zeta}(s) \wedge \Stand_{\zeta}(s)
+  \quad\Longrightarrow\quad
+  \Re(s)=\Half.
+\]
+\end{theorem}
+
+The Lean theorem is:
+\[
+\texttt{aasc\_standing\_zero\_interior\_rigidity}.
+\]
+
+\begin{proof}
+Assume \(s\) is nontrivial zeta zero-support and has standing.  By classical
+excluded middle on the critical-line predicate, either \(s\) is on the
+critical line or not.  In the first case we are done.  In the second case,
+\(s\) is off-critical-line zero-support.  The zeta bridge marks such support
+as requiring a horizontal selector.  The same-domain selector kernel blocks
+standing for such a selector when it is not invariant-bundle-fixed.  Hence
+\(\neg\Stand_{\zeta}(s)\), contradicting the assumed standing.  Therefore the
+off-line case is impossible, and \(s\) is critical-line supported.
+\end{proof}
+
+The bundled endpoint is:
+\[
+\texttt{aasc\_solution\_from\_kernel\_certificate}.
+\]
+
+For the concrete mathlib zeta carrier, the AASC-native theorem is:
+\[
+\texttt{aasc\_native\_riemannHypothesis\_from\_bridge\_obligations}.
+\]
+It proves:
+\[
+  (\texttt{classicalRiemannZetaInterface Standing})
+  .\texttt{aascStandingCriticalLineSupported}.
+\]
+
+\section{Classical Bridge Status}
+
+The development also records the kernel-certificate bridge:
+\[
+\texttt{mathlib\_riemannHypothesis\_from\_kernel\_certificate}.
+\]
+This theorem proves mathlib's formal \(\texttt{RiemannHypothesis}\) from a
+\(\texttt{ZetaKernelBridgeCertificate}\).  The concrete certificate-obligation
+object is:
+\[
+\texttt{ClassicalRiemannZetaBridgeObligations}.
+\]
+
+Supplying that selector/kernel certificate closes the classical mathlib
+statement through:
+\[
+\texttt{mathlib\_riemannHypothesis\_from\_bridge\_obligations}.
+\]
+
+The bridge-equivalence theorem requested for handoff is:
+\[
+\texttt{aasc\_endpoint\_iff\_mathlib\_riemannHypothesis\_under\_zerohood\_standing}.
+\]
+It is stated for an explicit bridge object:
+\[
+\texttt{ClassicalZetaStandingZerohoodEquivalence}.
+\]
+This is the non-smuggling standing bridge:
+\[
+  \Stand(s)
+  \quad\Longleftrightarrow\quad
+  \bigl(s \text{ is in the nontrivial-zero context}\bigr)
+  \wedge \zeta(s)=0.
+\]
+No critical-line predicate occurs in this equivalence.  Under this bridge,
+Lean proves that the AASC structural endpoint
+\[
+  (\texttt{classicalRiemannZetaInterface Standing})
+  .\texttt{aascStandingCriticalLineSupported}
+\]
+is logically equivalent to mathlib's formal \(\texttt{RiemannHypothesis}\).
+
+The decisive audit point is also discharged for the canonical mathlib zeta
+carrier.  Lean defines:
+\[
+\texttt{classicalZetaZerohoodStanding}.
+\]
+This predicate is exactly nontrivial analytic zerohood:
+\[
+  \texttt{classicalZetaZerohoodStanding}(s)
+  :=
+  \bigl(s \text{ is in the nontrivial-zero context}\bigr)
+  \wedge \zeta(s)=0.
+\]
+Lean then proves:
+\[
+\texttt{classical\_zeta\_standing\_zerohood\_equivalence}.
+\]
+The proof is by definitional unfolding of
+\(\texttt{classicalZetaZerohoodStanding}\); it does not mention the critical
+line and does not invoke \(\texttt{RiemannHypothesis}\).
+
+Consequently the no-assumption bridge endpoint is:
+\[
+\texttt{aasc\_zerohood\_endpoint\_iff\_mathlib\_riemannHypothesis}.
+\]
+It states that the AASC endpoint for the canonical standing-as-zerohood
+interface is equivalent to mathlib's classical
+\(\texttt{RiemannHypothesis}\).
+
+Thus the bridge audit splits cleanly.  The standing/zerohood equivalence is no
+longer an assumption: it is discharged for the canonical mathlib zeta carrier.
+The selector/kernel certificate is the structural AASC content that proves the
+zero-interior endpoint.  The repository therefore reduces the classical RH
+claim to the remaining proof object:
+\[
+\texttt{Nonempty ClassicalRiemannZetaBridgeObligations}.
+\]
+This remaining object is also named:
+\[
+\texttt{RemainingClayLevelProofObject}.
+\]
+Lean records the reduction:
+\[
+\texttt{mathlib\_riemannHypothesis\_from\_remaining\_clay\_object}.
+\]
+Lean also proves the converse construction:
+\[
+\texttt{remaining\_clay\_object\_from\_mathlib\_riemannHypothesis}.
+\]
+Thus the exact audit theorem is:
+\[
+\texttt{remaining\_clay\_object\_iff\_mathlib\_riemannHypothesis}.
+\]
+This does not construct the remaining object unconditionally; it shows that
+the remaining certificate is exactly RH-strength.
+
+The zeta-specific construction has now been decomposed further in
+\[
+\texttt{BridgeProgram.lean}.
+\]
+There the canonical off-line selector is:
+\[
+\texttt{canonicalOffLineHorizontalSelector}.
+\]
+The canonical invariant-fixed predicate is:
+\[
+\texttt{canonicalCriticalLineFixedByInvariantBundle}.
+\]
+The exact hard sub-obligation is:
+\[
+\texttt{CanonicalSelectorFixednessSubobligation}.
+\]
+Lean proves:
+\[
+\texttt{canonical\_selector\_fixedness\_iff\_mathlib\_riemannHypothesis}.
+\]
+Thus the next proof target is sharply localized: a zeta-specific theorem that
+standing-bearing off-line selected zerohood is already invariant-fixed.  If
+that sub-obligation is supplied, Lean constructs the remaining object via:
+\[
+\texttt{remaining\_clay\_object\_from\_canonical\_selector\_fixedness}.
+\]
+
+The corpus-style extrapolation from illicit selector collapse is formalized as:
+\[
+\texttt{IllicitStandingCollapseExtrapolation}.
+\]
+Its two substantive fields are:
+\[
+\texttt{off\_line\_selector\_is\_illicit}
+\quad\text{and}\quad
+\texttt{illicit\_selector\_collapses\_standing}.
+\]
+Lean proves:
+\[
+\texttt{canonical\_selector\_fixedness\_from\_illicit\_standing\_collapse},
+\]
+\[
+\texttt{remaining\_clay\_object\_from\_illicit\_standing\_collapse},
+\]
+and
+\[
+\texttt{mathlib\_riemannHypothesis\_from\_illicit\_standing\_collapse}.
+\]
+This is the formal logical extrapolation from the matrix pattern that illicit
+coordinate/selector moves collapse standing.  The remaining zeta-specific task
+is to prove those two fields for the classical off-line selector without
+assuming RH.
+
+The matrix also supports the sharper illicit-or-scope-change fork:
+\[
+\texttt{IllicitOrScopeChangeExtrapolation}.
+\]
+Its substantive fields are:
+\[
+\texttt{off\_line\_selector\_is\_illicit\_or\_scope\_change},
+\]
+\[
+\texttt{illicit\_selector\_collapses\_standing},
+\]
+and
+\[
+\texttt{scope\_change\_cannot\_preserve\_same\_domain\_standing}.
+\]
+Lean proves:
+\[
+\texttt{canonical\_selector\_fixedness\_from\_illicit\_or\_scope\_change},
+\]
+\[
+\texttt{remaining\_clay\_object\_from\_illicit\_or\_scope\_change},
+\]
+and
+\[
+\texttt{mathlib\_riemannHypothesis\_from\_illicit\_or\_scope\_change}.
+\]
+This records the AASC dichotomy: an off-line selector either remains a
+same-domain move, in which case illicit-standing collapse applies, or it is a
+scope change, in which case it cannot refute the same-domain zeta/RH endpoint.
+The remaining zeta-specific task is to instantiate this fork without assuming
+RH.
+
+The standing-localization layer from \emph{Standing Localization under Realized
+Persistence} gives a further bridge certificate:
+\[
+\texttt{RealizedPersistenceStandingBridge}.
+\]
+It classifies a standing off-line selector as one of the blocked
+localization-failure modes:
+\[
+\texttt{GlobalStandingFailure},\quad
+\texttt{DiffuseStandingFailure},\quad
+\texttt{TraceOnlyFailure},
+\]
+\[
+\texttt{ExternalRepairFailure},\quad
+\texttt{DefaultRepresentativeSelection}.
+\]
+Lean proves:
+\[
+\texttt{canonical\_selector\_fixedness\_from\_realized\_persistence\_bridge},
+\]
+\[
+\texttt{remaining\_clay\_object\_from\_realized\_persistence\_bridge},
+\]
+and
+\[
+\texttt{mathlib\_riemannHypothesis\_from\_realized\_persistence\_bridge}.
+\]
+This records the fixed-domain localization rule: standing-bearing persistence
+cannot remain global, diffuse, trace-only, externally repaired,
+envelope-drifting, or representative-selected while still acting as a same-domain
+standing counterexample.  The zeta-specific burden is to prove that the
+classical off-line selector falls into this localization-failure classification
+without assuming RH.
+
+The same-scope operator-exhaustion layer gives a further bridge certificate:
+\[
+\texttt{OperatorExhaustionZetaBridge}.
+\]
+It classifies the off-line zeta selector as an attempted same-scope operator in
+one of the following cases:
+\[
+\texttt{StandingFixedBookkeepingOperator},\quad
+\texttt{ImportedOperatorDatum},\quad
+\texttt{SameScopeTotalization},
+\]
+\[
+\texttt{PostHocOperatorRepair},\quad
+\texttt{AMetricOperatorSelection}.
+\]
+Lean proves:
+\[
+\texttt{canonical\_selector\_fixedness\_from\_operator\_exhaustion},
+\]
+\[
+\texttt{remaining\_clay\_object\_from\_operator\_exhaustion},
+\]
+and
+\[
+\texttt{mathlib\_riemannHypothesis\_from\_operator\_exhaustion}.
+\]
+This records the operator-exhaustion rule: a standing-fixed same-scope operator
+is bookkeeping/invariant-fixed, while imported data, totalization, post-hoc
+repair, and AMetric selection cannot create same-domain standing.  The
+zeta-specific burden is to prove that the classical off-line selector falls into
+this operator-exhaustion classification without assuming RH.
+
+The Exactness ARC freedom-ledger layer gives a further bridge certificate:
+\[
+\texttt{ExactnessArcZetaBridge}.
+\]
+It classifies the off-line zeta readout as carrying one of the following
+unresolved exactness freedoms:
+\[
+\texttt{RepresentativeFreedom},\quad
+\texttt{EndpointBoundaryFreedom},\quad
+\texttt{TotalizationFreedom},
+\]
+\[
+\texttt{DomainExtensionFreedom},\quad
+\texttt{ExtractionReadoutFreedom},\quad
+\texttt{CalibrationProxyFreedom}.
+\]
+Lean proves:
+\[
+\texttt{canonical\_selector\_fixedness\_from\_exactness\_arc},
+\]
+\[
+\texttt{remaining\_clay\_object\_from\_exactness\_arc},
+\]
+and
+\[
+\texttt{mathlib\_riemannHypothesis\_from\_exactness\_arc}.
+\]
+This records the Exactness ARC rule: representative, endpoint, totalization,
+domain-extension, extraction/readout, or calibration/proxy freedom blocks
+promotion to a same-domain standing endpoint unless discharged.  The
+zeta-specific burden is to prove that the classical off-line readout falls into
+this exactness-freedom classification without assuming RH.
+
+Once the endpoint is established from that object and read through canonical
+standing-as-zerohood, Lean proves it is exactly equivalent to the classical RH
+statement.
+
+\section{Corpus Matrix Support}
+
+The refreshed corpus matrix checked locally was:
+\[
+\texttt{AASC\_Corpus\_Control\_Matrix.csv}.
+\]
+Observed row count:
+\[
+14813.
+\]
+
+CSV-aware searches did not find a dedicated RH/zeta bridge row.  The matrix
+therefore supports the general kernel side, not the zeta-specific classical
+bridge.
+
+\begin{center}
+\begin{tabular}{p{0.46\linewidth}p{0.42\linewidth}}
+\toprule
+Lean/proof role & Corpus row \\
+\midrule
+AMetric boundary / no pre-admissible selector authority
+  & \texttt{AASC4-P01-DEF-017} \\
+AMetric boundary forcing
+  & \texttt{AASC4-P01-THM-011} \\
+Standing conservation
+  & \texttt{AASC4-P01-THM-012} \\
+No admissibly distinct same-domain rederivation
+  & \texttt{AASC4-P01-THM-014} \\
+Boundary-crossed standing-conserving uniqueness
+  & \texttt{AASC4-P01-COR-003} \\
+No solver/transport selector promotion
+  & \texttt{AASC-EX3-COR-11-2} \\
+Transport fixed locus status
+  & \texttt{AASC-EX3-DEF-12-1} \\
+Fixed-locus non-promotion
+  & \texttt{AASC-EX3-THM-12-2} \\
+Endpoint/boundary-selection exclusion
+  & \texttt{AASC-EX3-THM-12-3} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The Lean source-ID register is:
+\[
+\texttt{MaleyLean.Papers.RiemannHypothesis.CorpusMatrix}.
+\]
+
+\section{Lean Theorem Map}
+
+\begin{center}
+\begin{longtable}{p{0.44\linewidth}p{0.48\linewidth}}
+\toprule
+Manuscript claim & Lean object \\
+\midrule
+Framework-internality is forced
+  & \texttt{framework\_internality\_unavoidable} \\
+Non-degenerate regime maps to governance system
+  & \texttt{NonDegenerateProofRegime.toGovernanceSystem} \\
+Non-degenerate regime instantiates AASC class
+  & \texttt{nondegenerate\_regime\_instantiates\_AASCClass} \\
+Non-degenerate regime instantiates kernel roles
+  & \texttt{nondegenerate\_regime\_instantiates\_kernel\_roles} \\
+Fixed zeta interface
+  & \texttt{ZetaInterface} \\
+Fixed zeta standing system
+  & \texttt{ZetaInterface.toStandingSystem} \\
+Global uniqueness imported and instantiated
+  & \texttt{zeta\_global\_uniqueness\_instantiated} \\
+No plural standing interiors
+  & \texttt{zeta\_no\_plural\_standing\_interiors} \\
+Same-domain selector kernel
+  & \texttt{SameDomainSelectorKernel} \\
+Selector blocks standing
+  & \texttt{SameDomainSelectorKernel.selector\_blocks\_standing} \\
+Zeta bridge certificate
+  & \texttt{ZetaKernelBridgeCertificate} \\
+AASC-native zero-interior rigidity
+  & \texttt{aasc\_standing\_zero\_interior\_rigidity} \\
+Bundled AASC endpoint
+  & \texttt{aasc\_solution\_from\_kernel\_certificate} \\
+Concrete mathlib zeta interface
+  & \texttt{classicalRiemannZetaInterface} \\
+Concrete bridge obligations
+  & \texttt{ClassicalRiemannZetaBridgeObligations} \\
+Canonical standing-as-zerohood predicate
+  & \texttt{classicalZetaZerohoodStanding} \\
+Standing/zerohood equivalence bridge
+  & \texttt{ClassicalZetaStandingZerohoodEquivalence} \\
+Discharged canonical standing/zerohood bridge
+  & \texttt{classical\_zeta\_standing\_zerohood\_equivalence} \\
+AASC endpoint iff classical RH under zerohood standing
+  & \texttt{aasc\_endpoint\_iff\_mathlib\_riemannHypothesis\_under\_zerohood\_standing} \\
+Canonical zerohood-standing endpoint iff classical RH
+  & \texttt{aasc\_zerohood\_endpoint\_iff\_mathlib\_riemannHypothesis} \\
+Off-line zerohood is target-preserving
+  & \texttt{classical\_off\_line\_zerohood\_is\_target\_preserving} \\
+Target-leaving contradicts zerohood
+  & \texttt{classical\_zerohood\_target\_leaving\_impossible} \\
+Target-preserving AASC bridge yields RH
+  & \texttt{mathlib\_riemannHypothesis\_from\_target\_preserving\_aasc} \\
+Constructional use forces kernel package
+  & \texttt{constructional\_use\_forces\_kernel\_package} \\
+No faithful same-regime below-kernel counterexample
+  & \texttt{no\_faithful\_same\_regime\_counterexample\_below\_kernel} \\
+Zeta zerohood construction forces kernel
+  & \texttt{classical\_zeta\_zerohood\_construction\_forces\_kernel} \\
+No zeta zerohood same-regime below-kernel counterexample
+  & \texttt{no\_classical\_zeta\_zerohood\_same\_regime\_counterexample\_below\_kernel} \\
+AASC-native mathlib-carrier endpoint
+  & \texttt{aasc\_native\_riemannHypothesis\_from\_bridge\_obligations} \\
+Remaining Clay-level proof object
+  & \texttt{RemainingClayLevelProofObject} \\
+RH from remaining proof object
+  & \texttt{mathlib\_riemannHypothesis\_from\_remaining\_clay\_object} \\
+Remaining proof object from RH
+  & \texttt{remaining\_clay\_object\_from\_mathlib\_riemannHypothesis} \\
+Remaining proof object iff RH
+  & \texttt{remaining\_clay\_object\_iff\_mathlib\_riemannHypothesis} \\
+Canonical off-line selector
+  & \texttt{canonicalOffLineHorizontalSelector} \\
+Hard selector fixedness sub-obligation
+  & \texttt{CanonicalSelectorFixednessSubobligation} \\
+Hard sub-obligation iff RH
+  & \texttt{canonical\_selector\_fixedness\_iff\_mathlib\_riemannHypothesis} \\
+Remaining object from hard sub-obligation
+  & \texttt{remaining\_clay\_object\_from\_canonical\_selector\_fixedness} \\
+Illicit standing-collapse extrapolation
+  & \texttt{IllicitStandingCollapseExtrapolation} \\
+Hard sub-obligation from illicit collapse
+  & \texttt{canonical\_selector\_fixedness\_from\_illicit\_standing\_collapse} \\
+Remaining object from illicit collapse
+  & \texttt{remaining\_clay\_object\_from\_illicit\_standing\_collapse} \\
+RH from illicit collapse
+  & \texttt{mathlib\_riemannHypothesis\_from\_illicit\_standing\_collapse} \\
+Illicit-or-scope-change extrapolation
+  & \texttt{IllicitOrScopeChangeExtrapolation} \\
+Hard sub-obligation from illicit-or-scope fork
+  & \texttt{canonical\_selector\_fixedness\_from\_illicit\_or\_scope\_change} \\
+Remaining object from illicit-or-scope fork
+  & \texttt{remaining\_clay\_object\_from\_illicit\_or\_scope\_change} \\
+RH from illicit-or-scope fork
+  & \texttt{mathlib\_riemannHypothesis\_from\_illicit\_or\_scope\_change} \\
+Realized-persistence standing bridge
+  & \texttt{RealizedPersistenceStandingBridge} \\
+Hard sub-obligation from realized-persistence bridge
+  & \texttt{canonical\_selector\_fixedness\_from\_realized\_persistence\_bridge} \\
+Remaining object from realized-persistence bridge
+  & \texttt{remaining\_clay\_object\_from\_realized\_persistence\_bridge} \\
+RH from realized-persistence bridge
+  & \texttt{mathlib\_riemannHypothesis\_from\_realized\_persistence\_bridge} \\
+Operator-exhaustion zeta bridge
+  & \texttt{OperatorExhaustionZetaBridge} \\
+Hard sub-obligation from operator exhaustion
+  & \texttt{canonical\_selector\_fixedness\_from\_operator\_exhaustion} \\
+Remaining object from operator exhaustion
+  & \texttt{remaining\_clay\_object\_from\_operator\_exhaustion} \\
+RH from operator exhaustion
+  & \texttt{mathlib\_riemannHypothesis\_from\_operator\_exhaustion} \\
+Exactness ARC zeta bridge
+  & \texttt{ExactnessArcZetaBridge} \\
+Hard sub-obligation from Exactness ARC
+  & \texttt{canonical\_selector\_fixedness\_from\_exactness\_arc} \\
+Remaining object from Exactness ARC
+  & \texttt{remaining\_clay\_object\_from\_exactness\_arc} \\
+RH from Exactness ARC
+  & \texttt{mathlib\_riemannHypothesis\_from\_exactness\_arc} \\
+Classical mathlib RH from certificate
+  & \texttt{mathlib\_riemannHypothesis\_from\_kernel\_certificate} \\
+Shortcut audit: critical-line standing equals RH bridge
+  & \texttt{criticalLineStanding\_zerohoodBridge\_is\_RH} \\
+Corpus matrix row register
+  & \texttt{rhCorpusKernelRows} \\
+\bottomrule
+\end{longtable}
+\end{center}
+
+\section{Verification Status}
+
+The following commands pass in the local workspace:
+\[
+\texttt{lake build MaleyLean.Papers.RiemannHypothesis}
+\]
+
+The RH axiom-check command:
+\[
+\texttt{lake env lean Checks\textbackslash Axiom\textbackslash RiemannHypothesisAxiomCheck.lean}
+\]
+reports that the framework-internality, non-degenerate-regime instantiation,
+kernel-role instantiation, global uniqueness, no-plural standing-interior,
+selector-blocking, constructional-kernel-forcing, and faithful-same-regime
+below-kernel exclusion theorems do not depend on additional axioms.  The
+discharged standing/zerohood theorem
+\[
+\texttt{classical\_zeta\_standing\_zerohood\_equivalence}
+\]
+and the final classical endpoints depend only on Lean's standard classical
+background axioms \(\texttt{propext}\), \(\texttt{Classical.choice}\), and
+\(\texttt{Quot.sound}\); they do not introduce an RH-specific axiom, a
+critical-line axiom, or an axiom asserting \(\texttt{RiemannHypothesis}\).
+
+For hostile-referee handoff, the exact bridge-print command file is:
+\[
+\texttt{Checks\textbackslash Axiom\textbackslash RiemannHypothesisBridgePrint.lean}.
+\]
+It prints \(\texttt{classicalZetaZerohoodStanding}\), the discharged
+\(\texttt{classical\_zeta\_standing\_zerohood\_equivalence}\), both relevant
+axiom traces, and
+\(\texttt{aasc\_zerohood\_endpoint\_iff\_mathlib\_riemannHypothesis}\).  The
+captured transcript is stored at:
+\[
+\texttt{Checks\textbackslash Axiom\textbackslash RiemannHypothesisBridgePrint.out.txt}.
+\]
+
+\section{Interpretation}
+
+The present result should be read as an AASC-native kernel-forcing solution for
+faithful same-regime zeta zerohood:
+\begin{quote}
+Classical zeta zerohood is the target.  A candidate that leaves zerohood has
+left the target and is degenerate.  A candidate that preserves zerohood remains
+in the same regime.  The minimal-conditions kernel paper proves that faithful
+same-regime construction forces the kernel and that no faithful below-kernel
+same-regime counterexample exists.  Once the kernel is forced, the same-domain
+selector kernel rules out standing-bearing off-critical-line support.  For the
+canonical mathlib standing predicate
+\(\texttt{classicalZetaZerohoodStanding}\), the resulting AASC endpoint is
+formally equivalent to mathlib's \(\texttt{RiemannHypothesis}\).
+\end{quote}
+
+This is not an analytic proof by estimation of \(\zeta\) on the critical
+strip.  The proof obligation is shifted: the decisive question is not whether
+one can analytically dominate all possible off-line zeros, but whether an
+off-line zerohood candidate can be both faithful same-regime zeta zerohood and
+below the AASC kernel.  The Lean development proves that it cannot.
+
+\end{document}
